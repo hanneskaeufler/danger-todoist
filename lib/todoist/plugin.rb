@@ -36,5 +36,9 @@ module Danger
         warn(message)
       end
     end
+
+    def print_todos_table
+      markdown("changed message")
+    end
   end
 end

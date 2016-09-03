@@ -14,9 +14,8 @@ module Danger
 
       context "files containing a todo" do
         before do
-          modified = ["a"]
-          allow(@dangerfile.git).to receive(:modified_files).and_return(modified)
-          allow(@dangerfile.git).to receive(:added_files).and_return([])
+          allow(@dangerfile.git).to receive(:modified_files).and_return([modified_with_todo])
+          allow(@dangerfile.git).to receive(:added_files).and_return([added_with_todo])
         end
 
         it "warns when files in the changeset" do
@@ -31,6 +30,13 @@ module Danger
 
           expect(@dangerfile.status_report[:warnings]).to eq(["changed message"])
         end
+
+        it "can print a report" do
+          @todoist.warn_for_todos
+          @todoist.print_todos_table
+
+          expect(@dangerfile.status_report[:markdowns]).to eq(["changed message"])
+        end
       end
 
       it "does nothing when no files are in changeset" do
@@ -41,6 +47,14 @@ module Danger
 
         expect(@dangerfile.status_report[:warnings]).to be_empty
       end
+    end
+
+    def modified_with_todo()
+      "a"
+    end
+
+    def added_with_todo()
+      "b"
     end
   end
 end
