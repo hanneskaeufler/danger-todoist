@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/hanneskaeufler/danger-todoist.svg?branch=master)](https://travis-ci.org/hanneskaeufler/danger-todoist)
+
 # danger-todoist
 
 A description of danger-todoist.
