@@ -18,7 +18,7 @@ module Danger
   #
   class DangerTodoist < Plugin
     DEFAULT_MESSAGE = "There remain todo items in the modified code.".freeze
-    TODO_REGEXP = /TODO/
+    TODO_REGEXP = /TODO|FIXME/i
 
     #
     # Message to be shown

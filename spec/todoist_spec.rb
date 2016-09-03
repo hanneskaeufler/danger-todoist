@@ -22,7 +22,7 @@ module Danger
           added = Git::Diff::DiffFile.new(
             "base",
             path:  "another/stuff.rb",
-            patch: "+ TODO: another todo"
+            patch: "+ fixme: another todo"
           )
 
           allow(@dangerfile.git).to receive(:diff_for_file)
