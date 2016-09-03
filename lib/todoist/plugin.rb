@@ -17,7 +17,7 @@ module Danger
   # @tags todos, fixme
   #
   class DangerTodoist < Plugin
-    DEFAULT_MESSAGE = "Foo the bar"
+    DEFAULT_MESSAGE = "There remain todo items in the modified code."
 
     attr_accessor :message, :todos
 
