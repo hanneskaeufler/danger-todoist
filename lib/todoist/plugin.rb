@@ -1,5 +1,7 @@
 module Danger
   #
+  # This is a danger plugin to detect any TODO/FIXME entries left in the code.
+  #
   # @example Ensure there are no TODOS left in the modified code
   #
   #          todoist.warn_for_todos
