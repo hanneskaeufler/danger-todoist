@@ -28,16 +28,21 @@ module Danger
 
     def warn_for_todos
       files = git.modified_files + git.added_files
+      self.todos = []
 
-      if files.empty?
-        self.todos = []
-      else
+      unless files.empty?
         warn(message)
-        self.todos = [Todo.new("some/file.rb", 12)]
+
+        files.each do |file|
+          self.todos << Todo.new(file, 12)
+        end
       end
     end
 
     def print_todos_table
+      return if todos.nil?
+      return if todos.empty?
+
       markdown("#### Todos left in files")
 
       todos

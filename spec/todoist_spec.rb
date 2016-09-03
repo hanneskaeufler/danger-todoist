@@ -37,7 +37,8 @@ module Danger
 
           expect(@dangerfile.status_report[:markdowns]).to eq([
             "#### Todos left in files",
-            "- some/file.rb in line 12"
+            "- some/file.rb in line 12",
+            "- another/stuff.rb in line 12"
           ])
         end
       end
@@ -47,8 +48,10 @@ module Danger
         allow(@dangerfile.git).to receive(:added_files).and_return([])
 
         @todoist.warn_for_todos
+        @todoist.print_todos_table
 
         expect(@dangerfile.status_report[:warnings]).to be_empty
+        expect(@dangerfile.status_report[:markdowns]).to be_empty
       end
     end
 
