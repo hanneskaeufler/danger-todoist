@@ -42,23 +42,21 @@ module Danger
         it "warns when files in the changeset" do
           @todoist.warn_for_todos
 
-          expect(@dangerfile.status_report[:warnings])
-            .to eq([DangerTodoist::DEFAULT_MESSAGE])
+          expect(warnings).to eq([DangerTodoist::DEFAULT_MESSAGE])
         end
 
         it "allows the message to be changed" do
           @todoist.message = "changed message"
           @todoist.warn_for_todos
 
-          expect(@dangerfile.status_report[:warnings])
-            .to eq(["changed message"])
+          expect(warnings).to eq(["changed message"])
         end
 
         it "can print a report" do
           @todoist.warn_for_todos
           @todoist.print_todos_table
 
-          expect(@dangerfile.status_report[:markdowns]).to eq(
+          expect(markdowns).to eq(
             [
               "#### Todos left in files",
               "- some/file.rb",
@@ -88,8 +86,8 @@ module Danger
           @todoist.warn_for_todos
           @todoist.print_todos_table
 
-          expect(@dangerfile.status_report[:warnings]).to be_empty
-          expect(@dangerfile.status_report[:markdowns]).to be_empty
+          expect(warnings).to be_empty
+          expect(markdowns).to be_empty
         end
       end
 
@@ -100,8 +98,8 @@ module Danger
         @todoist.warn_for_todos
         @todoist.print_todos_table
 
-        expect(@dangerfile.status_report[:warnings]).to be_empty
-        expect(@dangerfile.status_report[:markdowns]).to be_empty
+        expect(warnings).to be_empty
+        expect(markdowns).to be_empty
       end
     end
 
@@ -111,6 +109,14 @@ module Danger
 
     def added_with_todo
       "another/stuff.rb"
+    end
+
+    def warnings
+      @dangerfile.status_report[:warnings]
+    end
+
+    def markdowns
+      @dangerfile.status_report[:markdowns].map(&:message)
     end
   end
 end

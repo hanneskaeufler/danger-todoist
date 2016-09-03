@@ -55,9 +55,7 @@ module Danger
 
       markdown("#### Todos left in files")
 
-      @todos
-        .map { |todo| "- #{todo.file}" }
-        .map { |message| markdown(message) }
+      @todos.each { |todo| markdown("- #{todo.file}") }
     end
 
     private
