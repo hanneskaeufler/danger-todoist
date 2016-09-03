@@ -22,11 +22,21 @@ module Danger
 
     attr_accessor :message, :todos
 
+    #
+    # Returns the message shown when there are todos found
+    #
+    # @return String
+    #
     def message
       return @message unless @message.nil?
       DEFAULT_MESSAGE
     end
 
+    #
+    # Adds a warning if there are todos found in the modified code
+    #
+    # @return [void]
+    #
     def warn_for_todos
       self.todos = []
       return if files_of_interest.empty?
@@ -38,6 +48,11 @@ module Danger
       warn(message) unless todos.empty?
     end
 
+    #
+    # Adds a list of offending files to the danger comment
+    #
+    # @return [void]
+    #
     def print_todos_table
       return if todos.nil?
       return if todos.empty?
