@@ -36,7 +36,7 @@ module Danger
         files
           .map { |file| git.diff_for_file(file) }
           .each do |diff|
-            self.todos << Todo.new(diff.path, 12)
+            self.todos << Todo.new(diff.path)
         end
       end
     end
@@ -48,13 +48,13 @@ module Danger
       markdown("#### Todos left in files")
 
       todos
-        .map { |todo| "- #{todo.file} in line #{todo.line}" }
+        .map { |todo| "- #{todo.file}" }
         .map { |message| markdown(message) }
     end
 
     private
 
-    class Todo < Struct.new(:file, :line)
+    class Todo < Struct.new(:file)
     end
   end
 end

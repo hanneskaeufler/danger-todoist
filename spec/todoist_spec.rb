@@ -15,10 +15,12 @@ module Danger
       context "files containing a todo" do
         before do
           modified = Git::Diff::DiffFile.new("base", {
-            path: "some/file.rb"
+            path: "some/file.rb",
+            patch: "+ TODO: some todo"
           })
           added = Git::Diff::DiffFile.new("base", {
-            path: "another/stuff.rb"
+            path: "another/stuff.rb",
+            patch: "+ TODO: another todo"
           })
           allow(@dangerfile.git).to receive(:diff_for_file)
             .with("some/file.rb")
@@ -51,8 +53,8 @@ module Danger
 
           expect(@dangerfile.status_report[:markdowns]).to eq([
             "#### Todos left in files",
-            "- some/file.rb in line 12",
-            "- another/stuff.rb in line 12"
+            "- some/file.rb",
+            "- another/stuff.rb"
           ])
         end
       end
