@@ -18,6 +18,7 @@ module Danger
   #
   class DangerTodoist < Plugin
     DEFAULT_MESSAGE = "There remain todo items in the modified code."
+    TODO_REGEXP = /TODO/
 
     attr_accessor :message, :todos
 
@@ -31,13 +32,14 @@ module Danger
       self.todos = []
 
       unless files.empty?
-        warn(message)
-
         files
           .map { |file| git.diff_for_file(file) }
+          .select { |diff| contains_new_todo(diff) }
           .each do |diff|
             self.todos << Todo.new(diff.path)
         end
+
+        warn(message) unless self.todos.empty?
       end
     end
 
@@ -53,6 +55,10 @@ module Danger
     end
 
     private
+
+    def contains_new_todo(diff)
+      (diff.patch =~ TODO_REGEXP) != nil
+    end
 
     class Todo < Struct.new(:file)
     end
