@@ -33,8 +33,10 @@ module Danger
       unless files.empty?
         warn(message)
 
-        files.each do |file|
-          self.todos << Todo.new(file, 12)
+        files
+          .map { |file| git.diff_for_file(file) }
+          .each do |diff|
+            self.todos << Todo.new(diff.path, 12)
         end
       end
     end

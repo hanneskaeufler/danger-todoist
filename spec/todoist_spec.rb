@@ -14,6 +14,20 @@ module Danger
 
       context "files containing a todo" do
         before do
+          modified = Git::Diff::DiffFile.new("base", {
+            path: "some/file.rb"
+          })
+          added = Git::Diff::DiffFile.new("base", {
+            path: "another/stuff.rb"
+          })
+          allow(@dangerfile.git).to receive(:diff_for_file)
+            .with("some/file.rb")
+            .and_return(modified)
+
+          allow(@dangerfile.git).to receive(:diff_for_file)
+            .with("another/stuff.rb")
+            .and_return(added)
+
           allow(@dangerfile.git).to receive(:modified_files).and_return([modified_with_todo])
           allow(@dangerfile.git).to receive(:added_files).and_return([added_with_todo])
         end
