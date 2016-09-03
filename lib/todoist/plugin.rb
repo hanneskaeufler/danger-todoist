@@ -37,8 +37,7 @@ module Danger
       @todos = []
       return if files_of_interest.empty?
 
-      diffs_of_interest
-        .select { |diff| contains_new_todo(diff) }
+      diffs_containing_todo_markers
         .each { |diff| @todos << Todo.new(diff.path) }
 
       warn(message) unless @todos.empty?
@@ -74,6 +73,11 @@ module Danger
     def diffs_of_interest
       files_of_interest
         .map { |file| git.diff_for_file(file) }
+    end
+
+    def diffs_containing_todo_markers
+      diffs_of_interest
+        .select { |diff| contains_new_todo(diff) }
     end
 
     def contains_new_todo(diff)
