@@ -20,17 +20,13 @@ module Danger
     DEFAULT_MESSAGE = "There remain todo items in the modified code.".freeze
     TODO_REGEXP = /TODO/
 
-    attr_accessor :message, :todos
-
     #
-    # Returns the message shown when there are todos found
+    # Message to be shown
     #
-    # @return String
+    # @attr_writer [String] message Custom message shown when todos were found
+    # @return [void]
     #
-    def message
-      return @message unless @message.nil?
-      DEFAULT_MESSAGE
-    end
+    attr_writer :message
 
     #
     # Adds a warning if there are todos found in the modified code
@@ -38,14 +34,14 @@ module Danger
     # @return [void]
     #
     def warn_for_todos
-      self.todos = []
+      @todos = []
       return if files_of_interest.empty?
 
       diffs_of_interest
         .select { |diff| contains_new_todo(diff) }
-        .each { |diff| todos << Todo.new(diff.path) }
+        .each { |diff| @todos << Todo.new(diff.path) }
 
-      warn(message) unless todos.empty?
+      warn(message) unless @todos.empty?
     end
 
     #
@@ -54,17 +50,22 @@ module Danger
     # @return [void]
     #
     def print_todos_table
-      return if todos.nil?
-      return if todos.empty?
+      return if @todos.nil?
+      return if @todos.empty?
 
       markdown("#### Todos left in files")
 
-      todos
+      @todos
         .map { |todo| "- #{todo.file}" }
         .map { |message| markdown(message) }
     end
 
     private
+
+    def message
+      return @message unless @message.nil?
+      DEFAULT_MESSAGE
+    end
 
     def files_of_interest
       git.modified_files + git.added_files
