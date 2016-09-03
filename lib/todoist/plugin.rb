@@ -11,10 +11,10 @@ module Danger
   #
   # @example Ensure people are well warned about merging on Mondays
   #
-  #          my_plugin.warn_on_mondays
+  #          todoist.warn_for_todos
   #
   # @see  hanneskaeufler/danger-todoist
-  # @tags monday, weekends, time, rattata
+  # @tags todos, fixme
   #
   class DangerTodoist < Plugin
     DEFAULT_MESSAGE = "Foo the bar"
@@ -29,7 +29,7 @@ module Danger
     # A method that you can call from your Dangerfile
     # @return   [Array<String>]
     #
-    def warn_on_mondays
+    def warn_for_todos
       files = git.modified_files + git.added_files
 
       unless files.empty?
