@@ -35,7 +35,10 @@ module Danger
           @todoist.warn_for_todos
           @todoist.print_todos_table
 
-          expect(@dangerfile.status_report[:markdowns]).to eq(["changed message"])
+          expect(@dangerfile.status_report[:markdowns]).to eq([
+            "#### Todos left in files",
+            "- some/file.rb in line 12"
+          ])
         end
       end
 
@@ -50,11 +53,11 @@ module Danger
     end
 
     def modified_with_todo()
-      "a"
+      "some/file.rb"
     end
 
     def added_with_todo()
-      "b"
+      "another/stuff.rb"
     end
   end
 end

@@ -19,26 +19,33 @@ module Danger
   class DangerTodoist < Plugin
     DEFAULT_MESSAGE = "Foo the bar"
 
-    attr_accessor :message
+    attr_accessor :message, :todos
 
     def message
       return @message unless @message.nil?
       DEFAULT_MESSAGE
     end
 
-    # A method that you can call from your Dangerfile
-    # @return   [Array<String>]
-    #
     def warn_for_todos
       files = git.modified_files + git.added_files
 
-      unless files.empty?
+      if files.empty?
+        self.todos = []
+      else
         warn(message)
+        self.todos = [Todo.new("some/file.rb", 12)]
       end
     end
 
     def print_todos_table
-      markdown("changed message")
+      markdown("#### Todos left in files")
+
+      todos
+        .map { |todo| "- #{todo.file} in line #{todo.line}" }
+        .map { |message| markdown(message) }
+    end
+
+    class Todo < Struct.new(:file, :line)
     end
   end
 end
