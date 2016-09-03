@@ -6,11 +6,11 @@ require 'todoist/gem_version.rb'
 Gem::Specification.new do |spec|
   spec.name          = 'danger-todoist'
   spec.version       = Todoist::VERSION
-  spec.authors       = ['Hannes Kaeufler']
+  spec.authors       = ['Hannes Käufler']
   spec.email         = ['hannes.kaeufler@gmail.com']
-  spec.description   = %q{A short description of danger-todoist.}
-  spec.summary       = %q{A longer description of danger-todoist.}
-  spec.homepage      = 'https://github.com/Hannes Kaeufler/danger-todoist'
+  spec.description   = %q{A danger plugin for spotting introduced todos.}
+  spec.summary       = %q{Marking something with a todo is very common during implementing a new feature. Often those todos will get missed in code review.}
+  spec.homepage      = 'https://github.com/hanneskaeufler/danger-todoist'
   spec.license       = 'MIT'
 
   spec.files         = `git ls-files`.split($/)
