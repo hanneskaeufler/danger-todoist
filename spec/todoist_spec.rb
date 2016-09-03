@@ -12,14 +12,25 @@ module Danger
         @todoist = @dangerfile.todoist
       end
 
-      it "Warns when files in the changeset" do
-        modified = ["a"]
-        allow(@dangerfile.git).to receive(:modified_files).and_return(modified)
-        allow(@dangerfile.git).to receive(:added_files).and_return([])
+      context "Files containing a todo" do
+        before do
+          modified = ["a"]
+          allow(@dangerfile.git).to receive(:modified_files).and_return(modified)
+          allow(@dangerfile.git).to receive(:added_files).and_return([])
+        end
 
-        @todoist.warn_on_mondays
+        it "Warns when files in the changeset" do
+          @todoist.warn_on_mondays
 
-        expect(@dangerfile.status_report[:warnings]).to eq(["Trying to merge code on a Monday"])
+          expect(@dangerfile.status_report[:warnings]).to eq(["Foo the bar"])
+        end
+
+        it "allows the message to be changed" do
+          @todoist.message = "changed message"
+          @todoist.warn_on_mondays
+
+          expect(@dangerfile.status_report[:warnings]).to eq(["changed message"])
+        end
       end
 
       it "Does nothing when no files are in changeset" do

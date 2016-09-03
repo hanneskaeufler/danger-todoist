@@ -17,14 +17,23 @@ module Danger
   # @tags monday, weekends, time, rattata
   #
   class DangerTodoist < Plugin
+    DEFAULT_MESSAGE = "Foo the bar"
+
+    attr_accessor :message
+
+    def message
+      return @message unless @message.nil?
+      DEFAULT_MESSAGE
+    end
+
     # A method that you can call from your Dangerfile
     # @return   [Array<String>]
     #
     def warn_on_mondays
-      foo = git.modified_files + git.added_files
+      files = git.modified_files + git.added_files
 
-      unless foo.empty?
-        warn 'Trying to merge code on a Monday'
+      unless files.empty?
+        warn(message)
       end
     end
   end
