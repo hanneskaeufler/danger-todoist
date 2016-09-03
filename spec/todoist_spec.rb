@@ -22,7 +22,7 @@ module Danger
         it "Warns when files in the changeset" do
           @todoist.warn_on_mondays
 
-          expect(@dangerfile.status_report[:warnings]).to eq(["Foo the bar"])
+          expect(@dangerfile.status_report[:warnings]).to eq([DangerTodoist::DEFAULT_MESSAGE])
         end
 
         it "allows the message to be changed" do
