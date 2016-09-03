@@ -13,21 +13,19 @@ module Danger
   #
   #          my_plugin.warn_on_mondays
   #
-  # @see  Hannes Kaeufler/danger-todoist
+  # @see  hanneskaeufler/danger-todoist
   # @tags monday, weekends, time, rattata
   #
   class DangerTodoist < Plugin
-
-    # An attribute that you can read/write from your Dangerfile
-    #
-    # @return   [Array<String>]
-    attr_accessor :my_attribute
-
     # A method that you can call from your Dangerfile
     # @return   [Array<String>]
     #
     def warn_on_mondays
-      warn 'Trying to merge code on a Monday' if Date.today.wday == 1
+      foo = git.modified_files + git.added_files
+
+      unless foo.empty?
+        warn 'Trying to merge code on a Monday'
+      end
     end
   end
 end
