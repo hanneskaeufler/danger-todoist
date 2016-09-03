@@ -1,17 +1,18 @@
 module Danger
-  # This is your plugin class. Any attributes or methods you expose here will
-  # be available from within your Dangerfile.
   #
-  # To be published on the Danger plugins site, you will need to have
-  # the public interface documented. Danger uses [YARD](http://yardoc.org/)
-  # for generating documentation from your plugin source, and you can verify
-  # by running `danger plugins lint` or `bundle exec rake spec`.
-  #
-  # You should replace these comments with a public description of your library.
-  #
-  # @example Ensure people are well warned about merging on Mondays
+  # @example Ensure there are no TODOS left in the modified code
   #
   #          todoist.warn_for_todos
+  #
+  # @example Set custom warning message
+  #
+  #          todois.message = "Please fix all TODOS"
+  #          todoist.warn_for_todos
+  #
+  # @example List every todo item
+  #
+  #          todoist.warn_for_todos
+  #          todoist.print_todos_table
   #
   # @see  hanneskaeufler/danger-todoist
   # @tags todos, fixme
