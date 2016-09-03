@@ -50,6 +50,8 @@ module Danger
         .map { |message| markdown(message) }
     end
 
+    private
+
     class Todo < Struct.new(:file, :line)
     end
   end
