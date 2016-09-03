@@ -1,1 +1,1 @@
-require 'todoist/plugin'
+require "todoist/plugin"

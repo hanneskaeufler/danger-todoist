@@ -14,14 +14,17 @@ module Danger
 
       context "changed files containing a todo" do
         before do
-          modified = Git::Diff::DiffFile.new("base", {
-            path: "some/file.rb",
+          modified = Git::Diff::DiffFile.new(
+            "base",
+            path:  "some/file.rb",
             patch: "+ TODO: some todo"
-          })
-          added = Git::Diff::DiffFile.new("base", {
-            path: "another/stuff.rb",
+          )
+          added = Git::Diff::DiffFile.new(
+            "base",
+            path:  "another/stuff.rb",
             patch: "+ TODO: another todo"
-          })
+          )
+
           allow(@dangerfile.git).to receive(:diff_for_file)
             .with("some/file.rb")
             .and_return(modified)
@@ -30,46 +33,54 @@ module Danger
             .with("another/stuff.rb")
             .and_return(added)
 
-          allow(@dangerfile.git).to receive(:modified_files).and_return([modified_with_todo])
-          allow(@dangerfile.git).to receive(:added_files).and_return([added_with_todo])
+          allow(@dangerfile.git).to receive(:modified_files)
+            .and_return([modified_with_todo])
+          allow(@dangerfile.git).to receive(:added_files)
+            .and_return([added_with_todo])
         end
 
         it "warns when files in the changeset" do
           @todoist.warn_for_todos
 
-          expect(@dangerfile.status_report[:warnings]).to eq([DangerTodoist::DEFAULT_MESSAGE])
+          expect(@dangerfile.status_report[:warnings])
+            .to eq([DangerTodoist::DEFAULT_MESSAGE])
         end
 
         it "allows the message to be changed" do
           @todoist.message = "changed message"
           @todoist.warn_for_todos
 
-          expect(@dangerfile.status_report[:warnings]).to eq(["changed message"])
+          expect(@dangerfile.status_report[:warnings])
+            .to eq(["changed message"])
         end
 
         it "can print a report" do
           @todoist.warn_for_todos
           @todoist.print_todos_table
 
-          expect(@dangerfile.status_report[:markdowns]).to eq([
-            "#### Todos left in files",
-            "- some/file.rb",
-            "- another/stuff.rb"
-          ])
+          expect(@dangerfile.status_report[:markdowns]).to eq(
+            [
+              "#### Todos left in files",
+              "- some/file.rb",
+              "- another/stuff.rb"
+            ]
+          )
         end
       end
 
       context "changed files not containing a todo" do
         before do
-          modified = Git::Diff::DiffFile.new("base", {
-            path: "some/file.rb",
+          modified = Git::Diff::DiffFile.new(
+            "base",
+            path:  "some/file.rb",
             patch: "+ some added line"
-          })
+          )
           allow(@dangerfile.git).to receive(:diff_for_file)
             .with("some/file.rb")
             .and_return(modified)
 
-          allow(@dangerfile.git).to receive(:modified_files).and_return([modified_with_todo])
+          allow(@dangerfile.git).to receive(:modified_files)
+            .and_return([modified_with_todo])
           allow(@dangerfile.git).to receive(:added_files).and_return([])
         end
 
@@ -94,13 +105,12 @@ module Danger
       end
     end
 
-    def modified_with_todo()
+    def modified_with_todo
       "some/file.rb"
     end
 
-    def added_with_todo()
+    def added_with_todo
       "another/stuff.rb"
     end
   end
 end
-

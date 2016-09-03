@@ -1,1 +1,1 @@
-require 'todoist/gem_version'
+require "todoist/gem_version"
