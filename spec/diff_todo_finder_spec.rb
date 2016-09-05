@@ -54,6 +54,20 @@ module Danger
           expect(todos).to be_empty
         end
       end
+
+      it "identifies the todo text as well" do
+        diffs = [
+          Git::Diff::DiffFile.new(
+            "base",
+            path:  "some/file.rb",
+            patch: "+ TODO: practice you must"
+          )
+        ]
+
+        todos = subject.find_diffs_containing_todos(diffs)
+
+        expect(todos.first.text).to eql("practice you must")
+      end
     end
   end
 end

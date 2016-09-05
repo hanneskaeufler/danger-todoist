@@ -59,8 +59,8 @@ module Danger
           expect(markdowns).to eq(
             [
               "#### Todos left in files",
-              "- some/file.rb",
-              "- another/stuff.rb"
+              "- some/file.rb: some todo",
+              "- another/stuff.rb: another todo"
             ]
           )
         end
