@@ -38,7 +38,9 @@ module Danger
       [
         "+ class TodosController",
         "+ function foo(todo) {",
-        "+ def todo()"
+        "+ def todo()",
+        "+ def todo foo",
+        "+ * this looks like a todo but isnt"
       ].each do |patch|
         it "does not identify occurences in e.g. a new class name" do
           diffs = [

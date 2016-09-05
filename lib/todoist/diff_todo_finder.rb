@@ -1,7 +1,7 @@
 module Danger
   # Identify todos in a set of diffs
   class DiffTodoFinder
-    TODO_REGEXP = /\+.*(TODO|FIXME)[\s:](?<text>.*)$/i
+    TODO_REGEXP = /^\+\s*[^[:alnum:]](TODO|FIXME)[\s:](?<text>.*)$/i
 
     def find_diffs_containing_todos(diffs)
       # TODO: This will match removed todos as well
