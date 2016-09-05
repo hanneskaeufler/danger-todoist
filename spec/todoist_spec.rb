@@ -12,7 +12,7 @@ module Danger
         @todoist = @dangerfile.todoist
       end
 
-      context "changed files containing a todo" do
+      context "changed files containing newly introduced todos" do
         before do
           modified = Git::Diff::DiffFile.new(
             "base",
@@ -63,6 +63,31 @@ module Danger
               "- another/stuff.rb"
             ]
           )
+        end
+      end
+
+      context "changed files containing removed todos" do
+        before do
+          modified = Git::Diff::DiffFile.new(
+            "base",
+            path:  "some/file.rb",
+            patch: "- TODO: some todo"
+          )
+
+          allow(@dangerfile.git).to receive(:diff_for_file)
+            .with("some/file.rb")
+            .and_return(modified)
+
+          allow(@dangerfile.git).to receive(:modified_files)
+            .and_return([modified_with_todo])
+          allow(@dangerfile.git).to receive(:added_files)
+            .and_return([])
+        end
+
+        it "does not need to warn" do
+          @todoist.warn_for_todos
+
+          expect(warnings).to eq([])
         end
       end
 
