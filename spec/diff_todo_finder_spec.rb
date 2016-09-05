@@ -56,7 +56,9 @@ module Danger
         "+ function foo(todo) {",
         "+ def todo()",
         "+ def todo foo",
-        "+ * this looks like a todo but isnt"
+        "+ * this looks like a todo but isnt",
+        "+ TODO_REGEXP = /",
+        "+          todos = subject.find_diffs_containing_todos(diffs)"
       ].each do |patch|
         it "does not identify occurences in '#{patch}'" do
           diffs = [

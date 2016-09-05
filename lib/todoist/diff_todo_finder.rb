@@ -7,7 +7,7 @@ module Danger
       [^a-z0-9]*          # anything looking like a comment indicator
       \s+                 # followed by at least one space
       (TODO|FIXME)        # our todo indicator
-      [\s:]?              # followed by a space or colon
+      [\s:]{1}            # followed by a space or colon
       (?<text>.*)$        # matching any text until the end of the line
     /ix
 
