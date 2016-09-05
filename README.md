@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/hanneskaeufler/danger-todoist.svg?branch=master)](https://travis-ci.org/hanneskaeufler/danger-todoist)
+[![Build Status](https://travis-ci.org/hanneskaeufler/danger-todoist.svg?branch=master)](https://travis-ci.org/hanneskaeufler/danger-todoist) [![Gem Version](https://badge.fury.io/rb/danger-todoist.svg)](https://badge.fury.io/rb/danger-todoist)
 
 # danger-todoist
 
