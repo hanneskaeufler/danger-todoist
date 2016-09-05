@@ -1,6 +1,7 @@
 ## master
 
 * Only find newly introduced todos - hanneskaeufler
+* Don't find todos obviously occuring in code - hanneskaeufler
 
 ## 0.0.2
 

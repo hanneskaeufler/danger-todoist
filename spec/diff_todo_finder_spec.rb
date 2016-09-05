@@ -5,13 +5,13 @@ module Danger
     let(:subject) { Danger::DiffTodoFinder.new }
 
     describe "#find_diffs_containing_todos" do
-      %w(TODO todo FIXME fixme).each do |marker|
+      %w(TODO TODO: todo todo: FIXME fixme FIXME: fixme).each do |marker|
         it "identifies a new '#{marker}' as a todo" do
           diffs = [
             Git::Diff::DiffFile.new(
               "base",
               path:  "some/file.rb",
-              patch: "+ TODO: some todo"
+              patch: "+ #{marker} some todo"
             )
           ]
 
@@ -33,6 +33,26 @@ module Danger
         todos = subject.find_diffs_containing_todos(diffs)
 
         expect(todos).to be_empty
+      end
+
+      [
+        "+ class TodosController",
+        "+ function foo(todo) {",
+        "+ def todo()"
+      ].each do |patch|
+        it "does not identify occurences in e.g. a new class name" do
+          diffs = [
+            Git::Diff::DiffFile.new(
+              "base",
+              path:  "some/file.rb",
+              patch: patch
+            )
+          ]
+
+          todos = subject.find_diffs_containing_todos(diffs)
+
+          expect(todos).to be_empty
+        end
       end
     end
   end

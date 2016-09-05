@@ -1,7 +1,7 @@
 module Danger
   # Identify todos in a set of diffs
   class DiffTodoFinder
-    TODO_REGEXP = /\+.*TODO|FIXME/i
+    TODO_REGEXP = /\+.*(TODO|FIXME)[\s:]/i
 
     def find_diffs_containing_todos(diffs)
       diffs
