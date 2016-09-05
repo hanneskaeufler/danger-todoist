@@ -1,6 +1,7 @@
 ## master
 
 * extract and show todo text as well - hanneskaeufler
+* much more robust todo matching - hanneskaeufler
 
 ## 0.0.3
 
