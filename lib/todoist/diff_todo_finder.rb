@@ -23,10 +23,7 @@ module Danger
       todos
     end
 
-    # TODO: I want to see this
     class Todo < Struct.new(:file, :text)
     end
-
-    # this however, is not supposed to be a todo
   end
 end
