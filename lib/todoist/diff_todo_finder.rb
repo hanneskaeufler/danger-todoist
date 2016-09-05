@@ -2,13 +2,13 @@ module Danger
   # Identify todos in a set of diffs
   class DiffTodoFinder
     TODO_REGEXP = /
-      ^\+                 # we only look at additions, marked by + in unified diff
+      ^\+                 # we only look at additions, marked by + in diffs
       \s*                 # followed by optional space
       [^a-z0-9]*          # anything looking like a comment indicator
       \s+                 # followed by at least one space
       (TODO|FIXME)        # our todo indicator
       [\s:]?              # followed by a space or colon
-      (?<text>.*)$        # matching the actual todo text until the end of the line
+      (?<text>.*)$        # matching any text until the end of the line
     /ix
 
     def find_diffs_containing_todos(diffs)
