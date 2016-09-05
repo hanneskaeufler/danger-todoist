@@ -12,7 +12,7 @@ module Danger
         @todoist = @dangerfile.todoist
       end
 
-      context "changed files containing a todo" do
+      context "changed files containing newly introduced todos" do
         before do
           modified = Git::Diff::DiffFile.new(
             "base",
