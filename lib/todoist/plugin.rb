@@ -82,6 +82,7 @@ module Danger
     end
 
     def contains_new_todo(diff)
+      # TODO: This will match removed todos as well
       !(diff.patch =~ TODO_REGEXP).nil?
     end
 
