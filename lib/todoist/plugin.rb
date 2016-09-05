@@ -55,7 +55,10 @@ module Danger
 
       markdown("#### Todos left in files")
 
-      @todos.each { |todo| markdown("- #{todo.file}") }
+      @todos.each do |todo|
+        text = ": #{todo.text}" if todo.text
+        markdown("- #{todo.file}#{text}")
+      end
     end
 
     private
