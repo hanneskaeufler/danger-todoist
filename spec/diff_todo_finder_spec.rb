@@ -11,7 +11,23 @@ module Danger
             Git::Diff::DiffFile.new(
               "base",
               path:  "some/file.rb",
-              patch: "+ #{marker} some todo"
+              patch: "+ # #{marker} some todo"
+            )
+          ]
+
+          todos = subject.find_diffs_containing_todos(diffs)
+
+          expect(todos).to_not be_empty
+        end
+      end
+
+      %w(# {{ -- //).each do |comment|
+        it "identifies todos in languages with '#{comment}' as comments" do
+          diffs = [
+            Git::Diff::DiffFile.new(
+              "base",
+              path:  "some/file.rb",
+              patch: "+ #{comment} TODO: some todo"
             )
           ]
 
@@ -42,7 +58,7 @@ module Danger
         "+ def todo foo",
         "+ * this looks like a todo but isnt"
       ].each do |patch|
-        it "does not identify occurences in e.g. a new class name" do
+        it "does not identify occurences in '#{patch}'" do
           diffs = [
             Git::Diff::DiffFile.new(
               "base",
@@ -62,7 +78,7 @@ module Danger
           Git::Diff::DiffFile.new(
             "base",
             path:  "some/file.rb",
-            patch: "+ TODO: practice you must"
+            patch: "+ # TODO: practice you must"
           )
         ]
 
