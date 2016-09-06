@@ -58,7 +58,8 @@ module Danger
         "+ def todo foo",
         "+ * this looks like a todo but isnt",
         "+ TODO_REGEXP = /",
-        "+          todos = subject.find_diffs_containing_todos(diffs)"
+        "+          todos = subject.find_diffs_containing_todos(diffs)",
+        "++ # FIXME: with you the force is"
       ].each do |patch|
         it "does not identify occurences in '#{patch}'" do
           diffs = [
