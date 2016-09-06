@@ -26,12 +26,10 @@ module Danger
           )
 
           allow(@dangerfile.git).to receive(:diff_for_file)
-            .with("some/file.rb")
-            .and_return(modified)
+            .with("some/file.rb").and_return(modified)
 
           allow(@dangerfile.git).to receive(:diff_for_file)
-            .with("another/stuff.rb")
-            .and_return(added)
+            .with("another/stuff.rb").and_return(added)
 
           allow(@dangerfile.git).to receive(:modified_files)
             .and_return(["some/file.rb"])
@@ -85,8 +83,7 @@ module Danger
             patch: "+ some added line"
           )
           allow(@dangerfile.git).to receive(:diff_for_file)
-            .with("some/file.rb")
-            .and_return(modified)
+            .with("some/file.rb").and_return(modified)
 
           allow(@dangerfile.git).to receive(:modified_files)
             .and_return(["some/file.rb"])
