@@ -1,5 +1,7 @@
 ## master
 
+* warning is not sticky anymore - hanneskaeufler
+
 ## 0.1.0
 
 * extract and show todo text as well - hanneskaeufler

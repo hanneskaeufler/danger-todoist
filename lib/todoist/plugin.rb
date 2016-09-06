@@ -41,7 +41,7 @@ module Danger
 
       @todos = DiffTodoFinder.new.find_diffs_containing_todos(diffs_of_interest)
 
-      warn(message) unless @todos.empty?
+      warn(message, sticky: false) unless @todos.empty?
     end
 
     #
