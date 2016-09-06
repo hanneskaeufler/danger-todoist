@@ -2,13 +2,17 @@ module Danger
   #
   # This is a danger plugin to detect any TODO/FIXME entries left in the code.
   #
-  # @example Ensure there are no TODOS left in the modified code
+  # @example Ensure, by warning, there are no TODOS left in the modified code
   #
   #          todoist.warn_for_todos
   #
-  # @example Set custom warning message
+  # @example Ensure, by failing the build, no TODOS left in the modified code
   #
-  #          todois.message = "Please fix all TODOS"
+  #          todoist.fail_for_todos
+  #
+  # @example Set custom warning message for warning
+  #
+  #          todoist.message = "Please fix all TODOS"
   #          todoist.warn_for_todos
   #
   # @example List every todo item
