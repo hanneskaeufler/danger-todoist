@@ -58,7 +58,8 @@ module Danger
         "+ def todo foo",
         "+ * this looks like a todo but isnt",
         "+ TODO_REGEXP = /",
-        "+          todos = subject.find_diffs_containing_todos(diffs)"
+        "+          todos = subject.find_diffs_containing_todos(diffs)",
+        "++ # FIXME: with you the force is"
       ].each do |patch|
         it "does not identify occurences in '#{patch}'" do
           diffs = [
@@ -87,6 +88,29 @@ module Danger
         todos = subject.find_diffs_containing_todos(diffs)
 
         expect(todos.first.text).to eql("practice you must")
+      end
+
+      it "finds multiple todos in the same diff" do
+        patch = <<PATCH
++ # TODO: practice you must
++ def practice
++   return false
++ end
++ # FIXME: with you the force is
+PATCH
+
+        diffs = [
+          Git::Diff::DiffFile.new(
+            "base",
+            path:  "some/file.rb",
+            patch: patch
+          )
+        ]
+
+        todos = subject.find_diffs_containing_todos(diffs)
+
+        expect(todos.map(&:text))
+          .to eql(["practice you must", "with you the force is"])
       end
     end
   end
