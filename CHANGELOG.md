@@ -1,6 +1,7 @@
 ## master
 
 * warning is not sticky anymore - hanneskaeufler
+* add `fail_for_todos` to fail instead of warn - hanneskaeufler
 
 ## 0.1.0
 

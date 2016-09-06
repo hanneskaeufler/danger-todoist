@@ -36,12 +36,16 @@ module Danger
     # @return [void]
     #
     def warn_for_todos
-      @todos = []
-      return if files_of_interest.empty?
+      call_method_for_todos(:warn)
+    end
 
-      @todos = DiffTodoFinder.new.find_diffs_containing_todos(diffs_of_interest)
-
-      warn(message, sticky: false) unless @todos.empty?
+    #
+    # Adds an error if there are todos found in the modified code
+    #
+    # @return [void]
+    #
+    def fail_for_todos
+      call_method_for_todos(:fail)
     end
 
     #
@@ -62,6 +66,15 @@ module Danger
     end
 
     private
+
+    def call_method_for_todos(method)
+      @todos = []
+      return if files_of_interest.empty?
+
+      @todos = DiffTodoFinder.new.find_diffs_containing_todos(diffs_of_interest)
+
+      public_send(method, message, sticky: false) unless @todos.empty?
+    end
 
     def message
       return @message unless @message.nil?

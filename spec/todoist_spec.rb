@@ -45,6 +45,12 @@ module Danger
           expect(warnings).to eq([DangerTodoist::DEFAULT_MESSAGE])
         end
 
+        it "fails when files in the changeset" do
+          @todoist.fail_for_todos
+
+          expect(failures).to eq([DangerTodoist::DEFAULT_MESSAGE])
+        end
+
         it "allows the message to be changed" do
           @todoist.message = "changed message"
           @todoist.warn_for_todos
@@ -101,6 +107,10 @@ module Danger
         expect(warnings).to be_empty
         expect(markdowns).to be_empty
       end
+    end
+
+    def failures
+      @dangerfile.status_report[:errors]
     end
 
     def warnings
