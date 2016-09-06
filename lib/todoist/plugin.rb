@@ -20,6 +20,10 @@ module Danger
   #          todoist.warn_for_todos
   #          todoist.print_todos_table
   #
+  # @example Do anything with the todos. Todos have `text` and `file` properties
+  #
+  #          todoist.todos.each { |todo| puts todo.text }
+  #
   # @see  hanneskaeufler/danger-todoist
   # @tags todos, fixme
   #
@@ -58,7 +62,7 @@ module Danger
     # @return [void]
     #
     def print_todos_table
-      return if @todos.nil?
+      find_todos if @todos.nil?
       return if @todos.empty?
 
       markdown("#### Todos left in files")
@@ -69,15 +73,28 @@ module Danger
       end
     end
 
+    #
+    # Returns the list of todos in the current diff set
+    #
+    # @return [Array of todos]
+    #
+    def todos
+      find_todos if @todos.nil?
+      @todos
+    end
+
     private
 
     def call_method_for_todos(method)
+      find_todos if @todos.nil?
+      public_send(method, message, sticky: false) unless @todos.empty?
+    end
+
+    def find_todos
       @todos = []
       return if files_of_interest.empty?
 
       @todos = DiffTodoFinder.new.find_diffs_containing_todos(diffs_of_interest)
-
-      public_send(method, message, sticky: false) unless @todos.empty?
     end
 
     def message

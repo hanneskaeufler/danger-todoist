@@ -58,8 +58,7 @@ module Danger
           expect(warnings).to eq(["changed message"])
         end
 
-        it "can print a report" do
-          @todoist.warn_for_todos
+        it "can print a report, even without warning first" do
           @todoist.print_todos_table
 
           expect(markdowns).to eq(
@@ -69,6 +68,12 @@ module Danger
               "- another/stuff.rb: another todo"
             ]
           )
+        end
+
+        it "exposes todos to the dangerfile" do
+          expect(@todoist.todos.length).to eq(2)
+          expect(@todoist.todos.first.text).to eq("some todo")
+          expect(@todoist.todos.last.file).to eq("another/stuff.rb")
         end
       end
 
