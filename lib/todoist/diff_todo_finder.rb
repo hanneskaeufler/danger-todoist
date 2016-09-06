@@ -14,11 +14,12 @@ module Danger
     def find_diffs_containing_todos(diffs)
       todos = []
       diffs.each do |diff|
-        matches = diff.patch.match(TODO_REGEXP)
-        next if matches.nil?
+        matches = diff.patch.scan(TODO_REGEXP)
+        next if matches.empty?
 
-        text = matches[1] if matches[1]
-        todos << Todo.new(diff.path, text.strip)
+        matches.each do |match|
+          todos << Todo.new(diff.path, match.first.strip)
+        end
       end
       todos
     end

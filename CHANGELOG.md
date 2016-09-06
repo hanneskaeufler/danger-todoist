@@ -2,6 +2,7 @@
 
 * warning is not sticky anymore - hanneskaeufler
 * add `fail_for_todos` to fail instead of warn - hanneskaeufler
+* find multiple todos in the same diff - hanneskaeufler
 
 ## 0.1.0
 

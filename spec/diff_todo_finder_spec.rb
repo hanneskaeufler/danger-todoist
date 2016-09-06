@@ -88,6 +88,29 @@ module Danger
 
         expect(todos.first.text).to eql("practice you must")
       end
+
+      it "finds multiple todos in the same diff" do
+        patch = <<PATCH
++ # TODO: practice you must
++ def practice
++   return false
++ end
++ # FIXME: with you the force is
+PATCH
+
+        diffs = [
+          Git::Diff::DiffFile.new(
+            "base",
+            path:  "some/file.rb",
+            patch: patch
+          )
+        ]
+
+        todos = subject.find_diffs_containing_todos(diffs)
+
+        expect(todos.map(&:text))
+          .to eql(["practice you must", "with you the force is"])
+      end
     end
   end
 end
