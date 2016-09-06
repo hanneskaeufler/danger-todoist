@@ -34,9 +34,9 @@ module Danger
             .and_return(added)
 
           allow(@dangerfile.git).to receive(:modified_files)
-            .and_return([modified_with_todo])
+            .and_return(["some/file.rb"])
           allow(@dangerfile.git).to receive(:added_files)
-            .and_return([added_with_todo])
+            .and_return(["another/stuff.rb"])
         end
 
         it "warns when files in the changeset" do
@@ -78,7 +78,7 @@ module Danger
             .and_return(modified)
 
           allow(@dangerfile.git).to receive(:modified_files)
-            .and_return([modified_with_todo])
+            .and_return(["some/file.rb"])
           allow(@dangerfile.git).to receive(:added_files).and_return([])
         end
 
@@ -101,14 +101,6 @@ module Danger
         expect(warnings).to be_empty
         expect(markdowns).to be_empty
       end
-    end
-
-    def modified_with_todo
-      "some/file.rb"
-    end
-
-    def added_with_todo
-      "another/stuff.rb"
     end
 
     def warnings
