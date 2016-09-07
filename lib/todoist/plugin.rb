@@ -86,9 +86,9 @@ module Danger
 
     def print_todos_per_file(file, todos)
       markdown("- #{file}")
-      todos.each do |todo|
-        markdown("  - #{todo.text}") if todo.text
-      end
+      todos
+        .select(&:text)
+        .each { |todo| markdown("  - #{todo.text}") }
     end
 
     def call_method_for_todos(method)
