@@ -1,5 +1,9 @@
 ## master
 
+## 0.3.0
+
+* exposed `todoist.todos` to dangerfile - hanneskaeufler
+
 ## 0.2.0
 
 * warning is not sticky anymore - hanneskaeufler
