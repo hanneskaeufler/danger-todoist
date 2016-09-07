@@ -18,13 +18,10 @@ module Danger
         next if matches.empty?
 
         matches.each do |match|
-          todos << Todo.new(diff.path, match.first.strip)
+          todos << Danger::Todo.new(diff.path, match.first.strip)
         end
       end
       todos
-    end
-
-    class Todo < Struct.new(:file, :text)
     end
   end
 end

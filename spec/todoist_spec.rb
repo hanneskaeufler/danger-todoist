@@ -26,12 +26,10 @@ module Danger
           )
 
           allow(@dangerfile.git).to receive(:diff_for_file)
-            .with("some/file.rb")
-            .and_return(modified)
+            .with("some/file.rb").and_return(modified)
 
           allow(@dangerfile.git).to receive(:diff_for_file)
-            .with("another/stuff.rb")
-            .and_return(added)
+            .with("another/stuff.rb").and_return(added)
 
           allow(@dangerfile.git).to receive(:modified_files)
             .and_return(["some/file.rb"])
@@ -58,8 +56,7 @@ module Danger
           expect(warnings).to eq(["changed message"])
         end
 
-        it "can print a report" do
-          @todoist.warn_for_todos
+        it "can print a report, even without warning first" do
           @todoist.print_todos_table
 
           expect(markdowns).to eq(
@@ -69,6 +66,12 @@ module Danger
               "- another/stuff.rb: another todo"
             ]
           )
+        end
+
+        it "exposes todos to the dangerfile" do
+          expect(@todoist.todos.length).to eq(2)
+          expect(@todoist.todos.first.text).to eq("some todo")
+          expect(@todoist.todos.last.file).to eq("another/stuff.rb")
         end
       end
 
@@ -80,8 +83,7 @@ module Danger
             patch: "+ some added line"
           )
           allow(@dangerfile.git).to receive(:diff_for_file)
-            .with("some/file.rb")
-            .and_return(modified)
+            .with("some/file.rb").and_return(modified)
 
           allow(@dangerfile.git).to receive(:modified_files)
             .and_return(["some/file.rb"])
