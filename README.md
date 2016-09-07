@@ -15,14 +15,21 @@ A description of danger-todoist.
 
 ### todoist
 
-<blockquote>Ensure there are no TODOS left in the modified code
+This is a danger plugin to detect any TODO/FIXME entries left in the code.
+
+<blockquote>Ensure, by warning, there are no TODOS left in the modified code
   <pre>
 todoist.warn_for_todos</pre>
 </blockquote>
 
-<blockquote>Set custom warning message
+<blockquote>Ensure, by failing the build, no TODOS left in the modified code
   <pre>
-todois.message = "Please fix all TODOS"
+todoist.fail_for_todos</pre>
+</blockquote>
+
+<blockquote>Set custom warning message for warning
+  <pre>
+todoist.message = "Please fix all TODOS"
 todoist.warn_for_todos</pre>
 </blockquote>
 
@@ -30,6 +37,11 @@ todoist.warn_for_todos</pre>
   <pre>
 todoist.warn_for_todos
 todoist.print_todos_table</pre>
+</blockquote>
+
+<blockquote>Do anything with the todos. Todos have `text` and `file` properties
+  <pre>
+todoist.todos.each { |todo| puts todo.text }</pre>
 </blockquote>
 
 #### Attributes
@@ -40,7 +52,11 @@ todoist.print_todos_table</pre>
 
 `warn_for_todos` - Adds a warning if there are todos found in the modified code
 
+`fail_for_todos` - Adds an error if there are todos found in the modified code
+
 `print_todos_table` - Adds a list of offending files to the danger comment
+
+`todos` - Returns the list of todos in the current diff set
 
 ## Development
 
