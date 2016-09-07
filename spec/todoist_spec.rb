@@ -1,5 +1,6 @@
 require File.expand_path("../spec_helper", __FILE__)
 
+# TODO: This file is too long according to rubocop
 module Danger
   describe Danger::DangerTodoist do
     it "should be a plugin" do
@@ -13,6 +14,7 @@ module Danger
       end
 
       context "changed files containing newly introduced todos" do
+        # FIXME: I dont like the excessive before block
         before do
           modified = Git::Diff::DiffFile.new(
             "base",
