@@ -149,17 +149,5 @@ PATCH
         expect(markdowns).to be_empty
       end
     end
-
-    def failures
-      @dangerfile.status_report[:errors]
-    end
-
-    def warnings
-      @dangerfile.status_report[:warnings]
-    end
-
-    def markdowns
-      @dangerfile.status_report[:markdowns].map(&:message)
-    end
   end
 end
