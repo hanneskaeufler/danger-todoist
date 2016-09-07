@@ -141,9 +141,11 @@ PATCH
         allow(@dangerfile.git).to receive(:added_files).and_return([])
 
         @todoist.warn_for_todos
+        @todoist.fail_for_todos
         @todoist.print_todos_table
 
         expect(warnings).to be_empty
+        expect(failures).to be_empty
         expect(markdowns).to be_empty
       end
     end
