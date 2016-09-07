@@ -62,8 +62,10 @@ module Danger
           expect(markdowns).to eq(
             [
               "#### Todos left in files",
-              "- some/file.rb: some todo",
-              "- another/stuff.rb: another todo"
+              "- some/file.rb",
+              "  - some todo",
+              "- another/stuff.rb",
+              "  - another todo"
             ]
           )
         end
@@ -73,6 +75,39 @@ module Danger
           expect(@todoist.todos.first.text).to eq("some todo")
           expect(@todoist.todos.last.file).to eq("another/stuff.rb")
         end
+      end
+
+      it "groups todos by file in the report" do
+        patch = <<PATCH
++ # TODO: some todo
++ def foo
++ end
++ # TODO: another todo
+PATCH
+
+        modified = Git::Diff::DiffFile.new(
+          "base",
+          path:  "some/file.rb",
+          patch: patch
+        )
+
+        allow(@dangerfile.git).to receive(:diff_for_file)
+          .with("some/file.rb").and_return(modified)
+        allow(@dangerfile.git).to receive(:modified_files)
+          .and_return(["some/file.rb"])
+        allow(@dangerfile.git).to receive(:added_files)
+          .and_return([])
+
+        @todoist.print_todos_table
+
+        expect(markdowns).to eq(
+          [
+            "#### Todos left in files",
+            "- some/file.rb",
+            "  - some todo",
+            "  - another todo"
+          ]
+        )
       end
 
       context "changed files not containing a todo" do
