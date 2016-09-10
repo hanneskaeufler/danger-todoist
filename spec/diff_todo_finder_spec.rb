@@ -21,7 +21,8 @@ module Danger
         end
       end
 
-      %w(# {{ -- //).each do |comment|
+      # those comment indicators are ripped off https://github.com/pgilad/leasot
+      %w(# {{ -- // /* <!-- <%# % / -# {{! {{!-- {# <%--).each do |comment|
         it "identifies todos in languages with '#{comment}' as comments" do
           diffs = [
             Git::Diff::DiffFile.new(
