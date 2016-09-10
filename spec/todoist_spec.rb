@@ -14,10 +14,17 @@ module Danger
 
       context "changed files containing newly introduced todos" do
         before do
+          patch = <<PATCH
++ # TODO: some todo
++ def foo
++ end
++ # TODO: more todo in same file
+PATCH
+
           modified = Git::Diff::DiffFile.new(
             "base",
             path:  "some/file.rb",
-            patch: "+ # TODO: some todo"
+            patch: patch
           )
           added = Git::Diff::DiffFile.new(
             "base",
@@ -62,14 +69,17 @@ module Danger
           expect(markdowns).to eq(
             [
               "#### Todos left in files",
-              "- some/file.rb: some todo",
-              "- another/stuff.rb: another todo"
+              "- some/file.rb",
+              "  - some todo",
+              "  - more todo in same file",
+              "- another/stuff.rb",
+              "  - another todo"
             ]
           )
         end
 
         it "exposes todos to the dangerfile" do
-          expect(@todoist.todos.length).to eq(2)
+          expect(@todoist.todos.length).to eq(3)
           expect(@todoist.todos.first.text).to eq("some todo")
           expect(@todoist.todos.last.file).to eq("another/stuff.rb")
         end
@@ -104,23 +114,13 @@ module Danger
         allow(@dangerfile.git).to receive(:added_files).and_return([])
 
         @todoist.warn_for_todos
+        @todoist.fail_for_todos
         @todoist.print_todos_table
 
         expect(warnings).to be_empty
+        expect(failures).to be_empty
         expect(markdowns).to be_empty
       end
-    end
-
-    def failures
-      @dangerfile.status_report[:errors]
-    end
-
-    def warnings
-      @dangerfile.status_report[:warnings]
-    end
-
-    def markdowns
-      @dangerfile.status_report[:markdowns].map(&:message)
     end
   end
 end

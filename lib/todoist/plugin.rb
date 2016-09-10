@@ -67,10 +67,9 @@ module Danger
 
       markdown("#### Todos left in files")
 
-      @todos.each do |todo|
-        text = ": #{todo.text}" if todo.text
-        markdown("- #{todo.file}#{text}")
-      end
+      @todos
+        .group_by(&:file)
+        .each { |file, todos| print_todos_per_file(file, todos) }
     end
 
     #
@@ -84,6 +83,13 @@ module Danger
     end
 
     private
+
+    def print_todos_per_file(file, todos)
+      markdown("- #{file}")
+      todos
+        .select(&:text)
+        .each { |todo| markdown("  - #{todo.text}") }
+    end
 
     def call_method_for_todos(method)
       find_todos if @todos.nil?
