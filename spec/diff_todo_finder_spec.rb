@@ -62,7 +62,8 @@ module Danger
         "+          todos = subject.find_diffs_containing_todos(diffs)",
         "++ # FIXME: with you the force is",
         "+ TODO: foo",
-        "+ TODO"
+        "+ TODO",
+        "+   TODO: something"
       ].each do |patch|
         it "does not identify occurences in '#{patch}'" do
           diffs = [

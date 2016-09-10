@@ -4,7 +4,7 @@ module Danger
     TODO_REGEXP = /
       ^\+                 # we only look at additions, marked by + in diffs
       \s*                 # followed by optional space
-      [^a-z0-9\+]+        # anything looking like a comment indicator, not a +
+      [^a-z0-9\+\s]+        # anything looking like a comment indicator, not a +
       \s+                 # followed by at least one space
       (TODO|FIXME)        # our todo indicator
       [\s:]{1}            # followed by a space or colon
