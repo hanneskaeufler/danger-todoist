@@ -1,5 +1,7 @@
 ## master
 
+* fix bug where `+ TODO` would be identified as todo - hanneskaeufler
+
 ## 1.0.0
 
 * group todos by file - hanneskaeufler

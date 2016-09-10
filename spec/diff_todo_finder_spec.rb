@@ -60,7 +60,9 @@ module Danger
         "+ * this looks like a todo but isnt",
         "+ TODO_REGEXP = /",
         "+          todos = subject.find_diffs_containing_todos(diffs)",
-        "++ # FIXME: with you the force is"
+        "++ # FIXME: with you the force is",
+        "+ TODO: foo",
+        "+ TODO"
       ].each do |patch|
         it "does not identify occurences in '#{patch}'" do
           diffs = [
