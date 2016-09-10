@@ -1,5 +1,7 @@
 ## master
 
+## 1.0.0
+
 * group todos by file - hanneskaeufler
 
 ## 0.3.0
