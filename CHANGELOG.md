@@ -1,5 +1,7 @@
 ## master
 
+## 1.0.1
+
 * fix bug where `+ TODO` would be identified as todo - hanneskaeufler
 
 ## 1.0.0
