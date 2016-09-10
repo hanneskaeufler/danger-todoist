@@ -2,20 +2,17 @@
 
 # danger-todoist
 
-A description of danger-todoist.
+danger-todoist is a [https://danger.systems](danger) plugin to automatically notify you of
+todos left in the code of a pull/merge request.
 
 ## Installation
 
-    $ gem install danger-todoist
+Add `gem 'danger-todoist'` to your `Gemfile` and start using todoist in your `Dangerfile`.
 
 ## Usage
 
     Methods and attributes from this plugin are available in
     your `Dangerfile` under the `todoist` namespace.
-
-### todoist
-
-This is a danger plugin to detect any TODO/FIXME entries left in the code.
 
 <blockquote>Ensure, by warning, there are no TODOS left in the modified code
   <pre>
