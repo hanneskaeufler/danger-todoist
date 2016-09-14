@@ -116,6 +116,26 @@ PATCH
         expect(todos.map(&:text))
           .to eql(["practice you must", "with you the force is"])
       end
+
+      it "finds todos in multiline comments" do
+        patch = <<PATCH
++ /*
++  TODO: something
++ */
+PATCH
+
+        diffs = [
+          Git::Diff::DiffFile.new(
+            "base",
+            path:  "some/file.rb",
+            patch: patch
+          )
+        ]
+
+        todos = subject.find_diffs_containing_todos(diffs)
+
+        expect(todos.map(&:text)).to eql(["something"])
+      end
     end
   end
 end
