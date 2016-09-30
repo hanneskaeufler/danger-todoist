@@ -69,3 +69,11 @@ end
 def markdowns
   @dangerfile.status_report[:markdowns].map(&:message)
 end
+
+def sample_diff(patch)
+  Git::Diff::DiffFile.new(
+    "base",
+    path:  "some/file.rb",
+    patch: patch
+  )
+end
