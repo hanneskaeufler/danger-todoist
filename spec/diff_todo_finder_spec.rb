@@ -7,15 +7,9 @@ module Danger
     describe "#find_diffs_containing_todos" do
       %w(TODO TODO: todo todo: FIXME fixme FIXME: fixme).each do |marker|
         it "identifies a new '#{marker}' as a todo" do
-          diffs = [
-            Git::Diff::DiffFile.new(
-              "base",
-              path:  "some/file.rb",
-              patch: "+ # #{marker} some todo"
-            )
-          ]
+          diff = sample_diff("+ # #{marker} some todo")
 
-          todos = subject.find_diffs_containing_todos(diffs)
+          todos = subject.find_diffs_containing_todos([diff])
 
           expect(todos).to_not be_empty
         end
@@ -24,30 +18,18 @@ module Danger
       # those comment indicators are ripped off https://github.com/pgilad/leasot
       %w(# {{ -- // /* <!-- <%# % / -# {{! {{!-- {# <%--).each do |comment|
         it "identifies todos in languages with '#{comment}' as comments" do
-          diffs = [
-            Git::Diff::DiffFile.new(
-              "base",
-              path:  "some/file.rb",
-              patch: "+ #{comment} TODO: some todo"
-            )
-          ]
+          diff = sample_diff("+ #{comment} TODO: some todo")
 
-          todos = subject.find_diffs_containing_todos(diffs)
+          todos = subject.find_diffs_containing_todos([diff])
 
           expect(todos).to_not be_empty
         end
       end
 
       it "does not identify removed todos as a todo" do
-        diffs = [
-          Git::Diff::DiffFile.new(
-            "base",
-            path:  "some/file.rb",
-            patch: "- TODO: some todo"
-          )
-        ]
+        diff = sample_diff("- TODO: some todo")
 
-        todos = subject.find_diffs_containing_todos(diffs)
+        todos = subject.find_diffs_containing_todos([diff])
 
         expect(todos).to be_empty
       end
@@ -66,30 +48,18 @@ module Danger
         "+   TODO: something"
       ].each do |patch|
         it "does not identify occurences in '#{patch}'" do
-          diffs = [
-            Git::Diff::DiffFile.new(
-              "base",
-              path:  "some/file.rb",
-              patch: patch
-            )
-          ]
+          diff = sample_diff("some/file.rb")
 
-          todos = subject.find_diffs_containing_todos(diffs)
+          todos = subject.find_diffs_containing_todos([diff])
 
           expect(todos).to be_empty
         end
       end
 
       it "identifies the todo text as well" do
-        diffs = [
-          Git::Diff::DiffFile.new(
-            "base",
-            path:  "some/file.rb",
-            patch: "+ # TODO: practice you must"
-          )
-        ]
+        diff = sample_diff("+ # TODO: practice you must")
 
-        todos = subject.find_diffs_containing_todos(diffs)
+        todos = subject.find_diffs_containing_todos([diff])
 
         expect(todos.first.text).to eql("practice you must")
       end
@@ -103,18 +73,30 @@ module Danger
 + # FIXME: with you the force is
 PATCH
 
-        diffs = [
-          Git::Diff::DiffFile.new(
-            "base",
-            path:  "some/file.rb",
-            patch: patch
-          )
-        ]
+        diff = sample_diff(patch)
 
-        todos = subject.find_diffs_containing_todos(diffs)
+        todos = subject.find_diffs_containing_todos([diff])
 
         expect(todos.map(&:text))
           .to eql(["practice you must", "with you the force is"])
+      end
+
+      it "finds todos in multiline comments" do
+        patch = <<PATCH
++ /*
++  TODO: something
++ */
++ function bla() {};
++ /**
++  * TODO: another
++  */
+PATCH
+
+        diff = sample_diff(patch)
+
+        todos = subject.find_diffs_containing_todos([diff])
+
+        expect(todos.map(&:text)).to eql(%w(something another))
       end
     end
   end
