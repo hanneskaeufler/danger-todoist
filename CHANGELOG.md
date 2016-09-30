@@ -1,5 +1,9 @@
 ## master
 
+## 1.1.0
+
+* add support for multiline comments - hanneskaeufler
+
 ## 1.0.1
 
 * fix bug where `+ TODO` would be identified as todo - hanneskaeufler
