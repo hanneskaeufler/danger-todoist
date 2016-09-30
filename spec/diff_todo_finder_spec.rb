@@ -122,6 +122,10 @@ PATCH
 + /*
 +  TODO: something
 + */
++ function bla() {};
++ /**
++  * TODO: another
++  */
 PATCH
 
         diffs = [
@@ -134,7 +138,7 @@ PATCH
 
         todos = subject.find_diffs_containing_todos(diffs)
 
-        expect(todos.map(&:text)).to eql(["something"])
+        expect(todos.map(&:text)).to eql(%w(something another))
       end
     end
   end
