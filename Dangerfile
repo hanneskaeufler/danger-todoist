@@ -4,6 +4,11 @@ warn("PR is classed as Work in Progress") if github.pr_title.include? "[WIP]"
 # Warn when there is a big PR
 warn("Big PR") if git.lines_of_code > 500
 
+# Reminder to add changelog entry
+unless git.modified_files.include?("CHANGELOG.md")
+  fail("Please include a CHANGELOG entry.", sticky: false)
+end
+
 # Identify leftover todos
 todoist.message = "There are still some things to do in this PR."
 todoist.warn_for_todos
