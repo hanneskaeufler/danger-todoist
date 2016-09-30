@@ -2,7 +2,7 @@
 
 # danger-todoist
 
-danger-todoist is a [https://danger.systems](danger) plugin to automatically notify you of
+danger-todoist is a [https://danger.systems](https://danger.systems) plugin to automatically notify you of
 todos left in the code of a pull/merge request.
 
 ## Installation
