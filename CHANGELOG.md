@@ -1,5 +1,7 @@
 ## master
 
+* fixes crash when git returns nil - hanneskaeufler
+
 ## 1.1.0
 
 * add support for multiline comments - hanneskaeufler
