@@ -114,6 +114,7 @@ module Danger
 
     def diffs_of_interest
       files_of_interest
+        .compact
         .map { |file| git.diff_for_file(file) }
     end
   end

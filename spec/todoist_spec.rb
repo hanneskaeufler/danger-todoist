@@ -1,5 +1,6 @@
 require File.expand_path("../spec_helper", __FILE__)
 
+# rubocop:disable Metrics/ModuleLength
 module Danger
   describe Danger::DangerTodoist do
     it "should be a plugin" do
@@ -120,6 +121,14 @@ PATCH
         expect(warnings).to be_empty
         expect(failures).to be_empty
         expect(markdowns).to be_empty
+      end
+
+      it "does not raise when git returns nil" do
+        invalid = [nil]
+        allow(@dangerfile.git).to receive(:modified_files).and_return(invalid)
+        allow(@dangerfile.git).to receive(:added_files).and_return([])
+
+        expect { @todoist.warn_for_todos }.to_not raise_error
       end
     end
   end
