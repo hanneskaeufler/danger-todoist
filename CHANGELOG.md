@@ -1,5 +1,7 @@
 ## master
 
+* allow to specify todo keywords - hanneskaeufler
+
 ## 1.1.0
 
 * add support for multiline comments - hanneskaeufler

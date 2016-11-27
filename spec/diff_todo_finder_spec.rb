@@ -15,6 +15,15 @@ module Danger
         end
       end
 
+      it "identifies todos with changed finder string" do
+        diff = sample_diff("+ # BUG some todo")
+
+        subject = described_class.new(["BUG"])
+        todos = subject.find_diffs_containing_todos([diff])
+
+        expect(todos).to_not be_empty
+      end
+
       # those comment indicators are ripped off https://github.com/pgilad/leasot
       %w(# {{ -- // /* <!-- <%# % / -# {{! {{!-- {# <%--).each do |comment|
         it "identifies todos in languages with '#{comment}' as comments" do

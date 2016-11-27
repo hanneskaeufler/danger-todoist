@@ -39,6 +39,13 @@ module Danger
     attr_writer :message
 
     #
+    # Keywords to recognize as todos
+    #
+    # @attr_writer [Array] keywords Custom array of strings to identify todos
+    # @return [void]
+    attr_writer :keywords
+
+    #
     # Adds a warning if there are todos found in the modified code
     #
     # @return [void]
@@ -100,7 +107,14 @@ module Danger
       @todos = []
       return if files_of_interest.empty?
 
-      @todos = DiffTodoFinder.new.find_diffs_containing_todos(diffs_of_interest)
+      @todos = DiffTodoFinder.new(keywords)
+                             .find_diffs_containing_todos(diffs_of_interest)
+    end
+
+    # BUG: what about empty array?
+    def keywords
+      return @keywords unless @keywords.nil?
+      %w(TODO FIXME)
     end
 
     def message
