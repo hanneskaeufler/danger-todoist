@@ -12,4 +12,7 @@ before_script:
   - bundle exec danger
 
 script:
-  - bundle exec rake spec
+  - COVERAGE=true bundle exec rake spec
+
+after_script:
+  - bundle exec codeclimate-test-reporter
