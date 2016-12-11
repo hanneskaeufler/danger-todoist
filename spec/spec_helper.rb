@@ -1,3 +1,6 @@
+require 'simplecov'
+SimpleCov.start if ENV["COVERAGE"]
+
 require "pathname"
 ROOT = Pathname.new(File.expand_path("../../", __FILE__))
 $LOAD_PATH.unshift((ROOT + "lib").to_s)

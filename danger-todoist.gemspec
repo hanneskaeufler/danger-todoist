@@ -26,6 +26,8 @@ Gem::Specification.new do |spec|
 
   # Testing support
   spec.add_development_dependency "rspec", "~> 3.4"
+  spec.add_development_dependency "simplecov", "~> 0.12"
+  spec.add_development_dependency "codeclimate-test-reporter", "~> 1.0.0"
 
   # Linting code and docs
   spec.add_development_dependency "rubocop", "~> 0.41"
@@ -46,6 +48,4 @@ Gem::Specification.new do |spec|
   #
   # This will stop test execution and let you inspect the results
   spec.add_development_dependency "pry", "~> 0"
-
-  spec.add_development_dependency "codeclimate-test-reporter", "~> 1.0.0"
 end
