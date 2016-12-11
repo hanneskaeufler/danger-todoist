@@ -1,4 +1,4 @@
-require 'simplecov'
+require "simplecov"
 if ENV["COVERAGE"]
   SimpleCov.start do
     add_filter "/spec/"
