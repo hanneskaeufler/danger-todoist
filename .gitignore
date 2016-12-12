@@ -1,3 +1,6 @@
 .DS_Store
-pkg
 .idea/
+.yardoc/
+Gemfile.lock
+coverage/
+pkg
