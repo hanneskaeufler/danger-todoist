@@ -111,7 +111,6 @@ module Danger
                              .find_diffs_containing_todos(diffs_of_interest)
     end
 
-    # BUG: what about empty array?
     def keywords
       return @keywords unless @keywords.nil?
       Danger::DiffTodoFinder::DEFAULT_KEYWORDS

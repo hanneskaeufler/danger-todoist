@@ -10,7 +10,6 @@ unless git.modified_files.include?("CHANGELOG.md")
 end
 
 # Identify leftover todos
-todoist.keywords = ["BUG"]
 todoist.message = "There are still some things to do in this PR."
 todoist.warn_for_todos
 todoist.print_todos_table
