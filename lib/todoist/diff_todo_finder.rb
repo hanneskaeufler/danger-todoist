@@ -1,7 +1,9 @@
 module Danger
   # Identify todos in a set of diffs
   class DiffTodoFinder
-    def initialize(keywords = %w(TODO FIXME))
+    DEFAULT_KEYWORDS = %w(TODO FIXME).freeze
+
+    def initialize(keywords)
       @keywords = keywords
     end
 

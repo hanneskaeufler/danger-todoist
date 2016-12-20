@@ -114,7 +114,7 @@ module Danger
     # BUG: what about empty array?
     def keywords
       return @keywords unless @keywords.nil?
-      %w(TODO FIXME)
+      Danger::DiffTodoFinder::DEFAULT_KEYWORDS
     end
 
     def message
