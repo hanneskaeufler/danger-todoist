@@ -1,5 +1,6 @@
 require File.expand_path("../spec_helper", __FILE__)
 
+# rubocop:disable Metrics/ModuleLength
 module Danger
   describe Danger::DangerTodoist do
     it "should be a plugin" do
@@ -61,6 +62,13 @@ PATCH
           @todoist.warn_for_todos
 
           expect(warnings).to eq(["changed message"])
+        end
+
+        it "allows the keywords to be changed" do
+          @todoist.keywords = ["find-nothing"]
+          @todoist.warn_for_todos
+
+          expect(warnings).to be_empty
         end
 
         it "can print a report, even without warning first" do
