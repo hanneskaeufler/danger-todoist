@@ -26,6 +26,15 @@ module Danger
         expect(todos).to_not be_empty
       end
 
+      it "doesnt crash but also doesnt find anything with empty keywords" do
+        diff = sample_diff("+ # BUG some todo")
+
+        subject = described_class.new([])
+        todos = subject.find_diffs_containing_todos([diff])
+
+        expect(todos).to be_empty
+      end
+
       # those comment indicators are ripped off https://github.com/pgilad/leasot
       %w(# {{ -- // /* <!-- <%# % / -# {{! {{!-- {# <%--).each do |comment|
         it "identifies todos in languages with '#{comment}' as comments" do
