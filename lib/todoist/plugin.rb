@@ -29,6 +29,7 @@ module Danger
   #
   class DangerTodoist < Plugin
     DEFAULT_MESSAGE = "There remain todo items in the modified code.".freeze
+    DEFAULT_KEYWORDS = %w(TODO FIXME).freeze
 
     #
     # Message to be shown
@@ -113,7 +114,7 @@ module Danger
 
     def keywords
       return @keywords unless @keywords.nil?
-      Danger::DiffTodoFinder::DEFAULT_KEYWORDS
+      DEFAULT_KEYWORDS
     end
 
     def message

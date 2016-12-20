@@ -3,7 +3,7 @@ require File.expand_path("../spec_helper", __FILE__)
 module Danger
   describe Danger::DiffTodoFinder do
     let(:subject) do
-      Danger::DiffTodoFinder.new(Danger::DiffTodoFinder::DEFAULT_KEYWORDS)
+      Danger::DiffTodoFinder.new(%w(TODO FIXME))
     end
 
     describe "#find_diffs_containing_todos" do
