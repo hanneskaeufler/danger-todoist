@@ -1,5 +1,7 @@
 ## master
 
+## 1.2.0
+
 * fixes crash when git returns nil - hanneskaeufler
 * allow to specify todo keywords - hanneskaeufler
 
