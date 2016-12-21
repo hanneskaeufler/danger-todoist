@@ -64,6 +64,13 @@ PATCH
           expect(warnings).to eq(["changed message"])
         end
 
+        it "allows the keywords to be changed" do
+          @todoist.keywords = ["find-nothing"]
+          @todoist.warn_for_todos
+
+          expect(warnings).to be_empty
+        end
+
         it "can print a report, even without warning first" do
           @todoist.print_todos_table
 

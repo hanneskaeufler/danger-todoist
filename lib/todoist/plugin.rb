@@ -29,6 +29,7 @@ module Danger
   #
   class DangerTodoist < Plugin
     DEFAULT_MESSAGE = "There remain todo items in the modified code.".freeze
+    DEFAULT_KEYWORDS = %w(TODO FIXME).freeze
 
     #
     # Message to be shown
@@ -37,6 +38,13 @@ module Danger
     # @return [void]
     #
     attr_writer :message
+
+    #
+    # Keywords to recognize as todos
+    #
+    # @attr_writer [Array] keywords Custom array of strings to identify todos
+    # @return [void]
+    attr_writer :keywords
 
     #
     # Adds a warning if there are todos found in the modified code
@@ -100,7 +108,13 @@ module Danger
       @todos = []
       return if files_of_interest.empty?
 
-      @todos = DiffTodoFinder.new.find_diffs_containing_todos(diffs_of_interest)
+      @todos = DiffTodoFinder.new(keywords)
+                             .find_diffs_containing_todos(diffs_of_interest)
+    end
+
+    def keywords
+      return @keywords unless @keywords.nil?
+      DEFAULT_KEYWORDS
     end
 
     def message

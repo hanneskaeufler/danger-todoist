@@ -2,7 +2,9 @@ require File.expand_path("../spec_helper", __FILE__)
 
 module Danger
   describe Danger::DiffTodoFinder do
-    let(:subject) { Danger::DiffTodoFinder.new }
+    let(:subject) do
+      Danger::DiffTodoFinder.new(%w(TODO FIXME))
+    end
 
     describe "#find_diffs_containing_todos" do
       %w(TODO TODO: todo todo: FIXME fixme FIXME: fixme).each do |marker|
@@ -13,6 +15,24 @@ module Danger
 
           expect(todos).to_not be_empty
         end
+      end
+
+      it "identifies todos with changed finder string" do
+        diff = sample_diff("+ # BUG some todo")
+
+        subject = described_class.new(["BUG"])
+        todos = subject.find_diffs_containing_todos([diff])
+
+        expect(todos).to_not be_empty
+      end
+
+      it "doesnt crash but also doesnt find anything with empty keywords" do
+        diff = sample_diff("+ # BUG some todo")
+
+        subject = described_class.new([])
+        todos = subject.find_diffs_containing_todos([diff])
+
+        expect(todos).to be_empty
       end
 
       # those comment indicators are ripped off https://github.com/pgilad/leasot
