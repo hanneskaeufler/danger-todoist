@@ -1,3 +1,6 @@
 engines:
   fixme:
     enabled: false
+ratings:
+  paths:
+    "**.rb"
