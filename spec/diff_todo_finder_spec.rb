@@ -119,6 +119,22 @@ PATCH
 
         expect(todos.map(&:text)).to eql(%w(something another))
       end
+
+      it "can extract multiline todo text" do
+        patch = <<PATCH
++ /**
++  * TODO: this should be parsed as
++  * a single item.
++  */
++ function bla() {};
+PATCH
+
+        diff = sample_diff(patch)
+
+        todos = subject.find_diffs_containing_todos([diff])
+
+        expect(todos.map(&:text)).to eql(["this should be parsed as a single item."])
+      end
     end
   end
 end
