@@ -134,6 +134,18 @@ PATCH
           .to eql(["this should be parsed as a single item.",
                    "this is a multiline comment as well"])
       end
+
+      it "finds todos inline after code" do
+        patch = <<PATCH
++ function bla() {}; // TODO: fix this
+PATCH
+
+        diff = sample_diff(patch)
+
+        todos = subject.find_diffs_containing_todos([diff])
+
+        expect(todos.map(&:text)).to eql(["fix this"])
+      end
     end
   end
   # rubocop:enable Metrics/BlockLength
