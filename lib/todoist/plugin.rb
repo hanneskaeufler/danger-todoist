@@ -113,13 +113,11 @@ module Danger
     end
 
     def keywords
-      return @keywords unless @keywords.nil?
-      DEFAULT_KEYWORDS
+      @keywords || DEFAULT_KEYWORDS
     end
 
     def message
-      return @message unless @message.nil?
-      DEFAULT_MESSAGE
+      @message || DEFAULT_MESSAGE
     end
 
     def files_of_interest
