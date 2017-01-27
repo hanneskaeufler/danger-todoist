@@ -45,6 +45,8 @@ todoist.todos.each { |todo| puts todo.text }</pre>
 
 `message` - Message to be shown
 
+`keywords` - Keywords to recognize as todos
+
 #### Methods
 
 `warn_for_todos` - Adds a warning if there are todos found in the modified code
