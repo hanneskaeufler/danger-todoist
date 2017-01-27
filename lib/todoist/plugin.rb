@@ -124,9 +124,12 @@ module Danger
       git.modified_files + git.added_files
     end
 
+    # for whatever reason nils/false weird things creep
+    # into the files_of_interest. We have to make sure to only
+    # try to look up diffs for actual filepaths (strings)
     def diffs_of_interest
       files_of_interest
-        .compact
+        .select { |file| file.is_a?(String) }
         .map { |file| git.diff_for_file(file) }
     end
   end

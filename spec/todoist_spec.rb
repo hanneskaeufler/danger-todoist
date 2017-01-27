@@ -132,9 +132,9 @@ PATCH
       end
 
       it "does not raise when git returns nil" do
-        invalid = [nil]
+        invalid = [nil, 0, false]
         allow(@dangerfile.git).to receive(:modified_files).and_return(invalid)
-        allow(@dangerfile.git).to receive(:added_files).and_return([])
+        allow(@dangerfile.git).to receive(:added_files).and_return(invalid)
 
         expect { @todoist.warn_for_todos }.to_not raise_error
       end
