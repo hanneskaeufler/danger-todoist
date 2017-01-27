@@ -2,6 +2,7 @@ require File.expand_path("../spec_helper", __FILE__)
 
 # rubocop:disable Metrics/ModuleLength
 module Danger
+  # rubocop:disable Metrics/BlockLength
   describe Danger::DangerTodoist do
     it "should be a plugin" do
       expect(Danger::DangerTodoist.new(nil)).to be_a Danger::Plugin
