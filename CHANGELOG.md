@@ -1,5 +1,7 @@
 ## master
 
+## 1.2.1
+
 * fix issue #32 crash on nil - hanneskaeufler
 
 ## 1.2.0
