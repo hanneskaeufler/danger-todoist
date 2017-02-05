@@ -1,5 +1,7 @@
 ## master
 
+## 1.2.2
+
 rescue from exception in git gem - hanneskaeufler
 update documentation in readme - hanneskaeufler
 
