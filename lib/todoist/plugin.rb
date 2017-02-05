@@ -128,9 +128,26 @@ module Danger
     # into the files_of_interest. We have to make sure to only
     # try to look up diffs for actual filepaths (strings)
     def diffs_of_interest
-      files_of_interest
-        .select { |file| file.is_a?(String) }
-        .map { |file| git.diff_for_file(file) }
+      files_of_interest.map do |file|
+        diff = EmptyDiff.new
+        begin
+          diff = git.diff_for_file(file)
+        rescue
+          log_unable_to_find_diff(file.inspect)
+        end
+        diff
+      end
+    end
+
+    def log_unable_to_find_diff(file)
+      markdown("* danger-todoist was unable to determine diff for \"#{file}\".")
+    end
+  end
+
+  # Null object incase a diff cannot be determined
+  class EmptyDiff
+    def patch
+      ""
     end
   end
 end

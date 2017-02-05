@@ -131,12 +131,21 @@ PATCH
         expect(markdowns).to be_empty
       end
 
-      it "does not raise when git returns nil" do
+      it "does not raise when git raises, but warns" do
         invalid = [nil, 0, false]
         allow(@dangerfile.git).to receive(:modified_files).and_return(invalid)
         allow(@dangerfile.git).to receive(:added_files).and_return(invalid)
 
         expect { @todoist.warn_for_todos }.to_not raise_error
+        expect(markdowns).to include(
+          "* danger-todoist was unable to determine diff for \"nil\"."
+        )
+        expect(markdowns).to include(
+          "* danger-todoist was unable to determine diff for \"0\"."
+        )
+        expect(markdowns).to include(
+          "* danger-todoist was unable to determine diff for \"false\"."
+        )
       end
     end
   end
