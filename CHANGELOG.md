@@ -1,6 +1,7 @@
 ## master
 
 rescue from exception in git gem - hanneskaeufler
+update documentation in readme - hanneskaeufler
 
 ## 1.2.1
 
