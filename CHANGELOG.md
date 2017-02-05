@@ -1,5 +1,7 @@
 ## master
 
+rescue from exception in git gem - hanneskaeufler
+
 ## 1.2.1
 
 * fix issue #32 crash on nil - hanneskaeufler
