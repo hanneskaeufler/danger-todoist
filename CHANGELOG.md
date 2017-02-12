@@ -1,5 +1,7 @@
 ## master
 
+* Update rubies to run in CI - hanneskaeufler
+
 ## 1.2.2
 
 rescue from exception in git gem - hanneskaeufler
