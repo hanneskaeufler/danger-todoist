@@ -5,8 +5,6 @@ module Danger
       @keywords = keywords
     end
 
-    # TODO: this must be cleaned up
-    # by quite a bit
     def find_diffs_containing_todos(diffs)
       todos = []
       regexp = todo_regexp
