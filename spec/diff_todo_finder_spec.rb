@@ -1,5 +1,6 @@
 require File.expand_path("../spec_helper", __FILE__)
 
+# rubocop:disable Metrics/ModuleLength
 module Danger
   # rubocop:disable Metrics/BlockLength
   describe Danger::DiffTodoFinder do
