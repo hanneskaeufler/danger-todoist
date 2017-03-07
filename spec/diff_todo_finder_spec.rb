@@ -1,5 +1,6 @@
 require File.expand_path("../spec_helper", __FILE__)
 
+# rubocop:disable Metrics/ModuleLength
 module Danger
   # rubocop:disable Metrics/BlockLength
   describe Danger::DiffTodoFinder do
@@ -94,9 +95,7 @@ module Danger
 + # FIXME: with you the force is
 PATCH
 
-        diff = sample_diff(patch)
-
-        todos = subject.find_diffs_containing_todos([diff])
+        todos = subject.find_diffs_containing_todos([sample_diff(patch)])
 
         expect(todos.map(&:text))
           .to eql(["practice you must", "with you the force is"])
@@ -113,11 +112,27 @@ PATCH
 +  */
 PATCH
 
-        diff = sample_diff(patch)
-
-        todos = subject.find_diffs_containing_todos([diff])
+        todos = subject.find_diffs_containing_todos([sample_diff(patch)])
 
         expect(todos.map(&:text)).to eql(%w(something another))
+      end
+
+      it "can extract multiline todo text" do
+        patch = <<PATCH
++ /**
++  * TODO: this should be parsed as
++  * a single item.
++  */
++ # TODO: this is a
++ # multiline comment as well
++ function bla() {};
+PATCH
+
+        todos = subject.find_diffs_containing_todos([sample_diff(patch)])
+
+        expect(todos.map(&:text))
+          .to eql(["this should be parsed as a single item.",
+                   "this is a multiline comment as well"])
       end
     end
   end

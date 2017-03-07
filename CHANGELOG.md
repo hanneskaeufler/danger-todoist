@@ -1,6 +1,7 @@
 ## master
 
 * Update rubies to run in CI - hanneskaeufler
+* support multiline todo text - hanneskaeufler
 
 ## 1.2.2
 
