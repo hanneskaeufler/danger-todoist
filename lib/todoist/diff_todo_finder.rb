@@ -31,6 +31,11 @@ module Danger
                  .strip
     end
 
+    # this is quite a mess now ... I knew it would haunt me.
+    # to aid debugging, this online regexr can be
+    # used: http://rubular.com/r/DPkoE2ztpn
+    # the regexp uses backreferences to match the comment indicator multiple
+    # times if possible
     def todo_regexp
       /
       (?<comment_indicator>^\+\s*[^a-z0-9\+\s]+)
