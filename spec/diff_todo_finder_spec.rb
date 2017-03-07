@@ -122,13 +122,16 @@ PATCH
 +  * TODO: this should be parsed as
 +  * a single item.
 +  */
++ # TODO: this is a
++ # multiline comment as well
 + function bla() {};
 PATCH
 
         todos = subject.find_diffs_containing_todos([sample_diff(patch)])
 
         expect(todos.map(&:text))
-          .to eql(["this should be parsed as a single item."])
+          .to eql(["this should be parsed as a single item.",
+                   "this is a multiline comment as well"])
       end
     end
   end

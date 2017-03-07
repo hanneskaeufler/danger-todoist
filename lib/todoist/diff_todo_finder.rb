@@ -24,9 +24,8 @@ module Danger
     private
 
     def clean_todo_text(match)
-      comment_indicator, _, entire_todo, _, rest = match
-      entire_todo.gsub(rest || "", "")
-                 .gsub(comment_indicator, "")
+      comment_indicator, _, entire_todo = match
+      entire_todo.gsub(comment_indicator, "")
                  .delete("\n")
                  .strip
     end
@@ -42,7 +41,7 @@ module Danger
       (\n\+)?\s+
       (?<todo_indicator>#{@keywords.join("|")})[\s:]{1}
       (?<entire_text>(?<text>[^\n]*)
-      (?<rest>\n\k<comment_indicator>\s*[^\n]*)*)
+      (?<rest>\n\k<comment_indicator>\s*[\w .]*)*)
       /ixm
     end
   end
