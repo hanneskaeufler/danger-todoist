@@ -132,7 +132,7 @@ module Danger
         diff = EmptyDiff.new
         begin
           diff = git.diff_for_file(file)
-        rescue
+        rescue NoMethodError
           log_unable_to_find_diff(file.inspect)
         end
         diff
