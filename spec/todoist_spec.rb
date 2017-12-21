@@ -149,4 +149,6 @@ PATCH
       end
     end
   end
+  # rubocop:enable Metrics/BlockLength
 end
+# rubocop:enable Metrics/ModuleLength

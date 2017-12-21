@@ -38,7 +38,9 @@ module Danger
       end
 
       # those comment indicators are ripped off https://github.com/pgilad/leasot
+      # rubocop:disable Lint/NestedPercentLiteral
       %w(# {{ -- // /* <!-- <%# % / -# {{! {{!-- {# <%--).each do |comment|
+        # rubocop:enable Lint/NestedPercentLiteral
         it "identifies todos in languages with '#{comment}' as comments" do
           diff = sample_diff("+ #{comment} TODO: some todo")
 
@@ -136,4 +138,6 @@ PATCH
       end
     end
   end
+  # rubocop:enable Metrics/BlockLength
 end
+# rubocop:enable Metrics/ModuleLength
