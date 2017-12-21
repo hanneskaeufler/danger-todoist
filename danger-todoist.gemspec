@@ -1,4 +1,3 @@
-# coding: utf-8
 lib = File.expand_path("../lib", __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require "todoist/gem_version.rb"
@@ -31,7 +30,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "simplecov", "~> 0.12"
 
   # Linting code and docs
-  spec.add_development_dependency "rubocop", "~> 0.49"
+  spec.add_development_dependency "rubocop", "~> 0.50"
   spec.add_development_dependency "yard", "~> 0.9.12"
 
   # Makes testing easy via `bundle exec guard`
