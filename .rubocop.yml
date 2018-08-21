@@ -17,5 +17,5 @@ PercentLiteralDelimiters:
     "%W": ()
     "%x": ()
 
-Style/IndentHeredoc:
+Layout/IndentHeredoc:
   Enabled: false
