@@ -108,8 +108,7 @@ module Danger
       @todos = []
       return if files_of_interest.empty?
 
-      @todos = DiffTodoFinder.new(keywords)
-                             .find_diffs_containing_todos(diffs_of_interest)
+      @todos = DiffTodoFinder.new(keywords).call(diffs_of_interest)
     end
 
     def keywords
