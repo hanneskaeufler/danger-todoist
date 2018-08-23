@@ -7,7 +7,7 @@ module Danger
 
     def call(diffs)
       diffs.map do |diff|
-        diff.patch.scan(/\+ .+(#{keywords})[\s:]{1}(.+)$/).map do |match|
+        diff.patch.scan(/\+ .{3,}(#{keywords})[\s:]{1}(.+)$/).map do |match|
           Todo.new(diff.path, match[1].strip)
         end
       end.flatten
