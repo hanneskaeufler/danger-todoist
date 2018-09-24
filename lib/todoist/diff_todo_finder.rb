@@ -1,3 +1,5 @@
+require "git_diff_parser"
+
 module Danger
   # Identify todos in a set of diffs
   class DiffTodoFinder
@@ -7,7 +9,10 @@ module Danger
 
     def call(diffs)
       diffs
-        .map { |diff| MatchesInDiff.new(diff, diff.patch.scan(@regexp)) }
+        .map do |diff|
+          puts GitDiffParser.parse(diff.patch).inspect
+          MatchesInDiff.new(diff, diff.patch.scan(@regexp))
+        end
         .reject { |combination| combination.matches.empty? }
         .map { |combination| build_todos(combination) }
         .flatten
@@ -16,12 +21,6 @@ module Danger
     private
 
     def build_todos(combination)
-      begin
-        puts combination.diff.blob(:dest)
-      rescue NoMethodError
-        puts "Didnt setup object tree in specs correctly"
-      end
-
       combination.matches.map do |match|
         build_todo(combination.diff.path, match)
       end

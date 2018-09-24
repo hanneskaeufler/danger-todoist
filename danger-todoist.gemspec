@@ -19,6 +19,7 @@ Gem::Specification.new do |spec|
   spec.required_ruby_version = ">= 2.0.0"
 
   spec.add_runtime_dependency "danger-plugin-api", "~> 1.0"
+  spec.add_runtime_dependency "git_diff_parser", "~> 3.1.0"
 
   # General ruby development
   spec.add_development_dependency "bundler", "~> 1.3"
