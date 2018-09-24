@@ -13,8 +13,7 @@ module Danger
         next if matches.empty?
 
         matches.each do |match|
-          puts diff.src
-          puts diff.dst
+          puts diff.inspect
           todos << Danger::Todo.new(diff.path, clean_todo_text(match), 5)
         end
       end
