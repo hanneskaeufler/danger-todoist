@@ -5,7 +5,7 @@ module Danger
       @keywords = keywords
     end
 
-    def find_diffs_containing_todos(diffs)
+    def call(diffs)
       todos = []
       regexp = todo_regexp
       diffs.each do |diff|
