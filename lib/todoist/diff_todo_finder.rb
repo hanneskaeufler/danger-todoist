@@ -16,6 +16,12 @@ module Danger
     private
 
     def build_todos(combination)
+      begin
+        puts combination.diff.blob(:dest)
+      rescue NoMethodError
+        puts "Didnt setup object tree in specs correctly"
+      end
+
       combination.matches.map do |match|
         build_todo(combination.diff.path, match)
       end
