@@ -108,8 +108,10 @@ module Danger
       @todos = []
       return if files_of_interest.empty?
 
-      @todos = DiffTodoFinder.new(keywords).call(diffs_of_interest) +
-               DiffInlineTodoFinder.new(keywords).call(diffs_of_interest)
+      @todos = finders
+               .map { |finder_class| finder_class.new(keywords) }
+               .map { |finder| finder.call(diffs_of_interest) }
+               .flatten
     end
 
     def keywords
@@ -141,6 +143,10 @@ module Danger
 
     def log_unable_to_find_diff(file)
       markdown("* danger-todoist was unable to determine diff for \"#{file}\".")
+    end
+
+    def finders
+      [DiffTodoFinder, DiffInlineTodoFinder]
     end
   end
 
