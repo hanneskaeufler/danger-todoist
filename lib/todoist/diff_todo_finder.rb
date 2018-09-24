@@ -9,16 +9,20 @@ module Danger
 
     def call(diffs)
       diffs
-        .map do |diff|
-          puts GitDiffParser.parse(diff.patch).inspect
-          MatchesInDiff.new(diff, diff.patch.scan(@regexp))
-        end
+        .each { |diff| debug(diff) }
+        .map { |diff| MatchesInDiff.new(diff, diff.patch.scan(@regexp)) }
         .reject { |combination| combination.matches.empty? }
         .map { |combination| build_todos(combination) }
         .flatten
     end
 
     private
+
+    def debug(diff)
+      GitDiffParser::Patches.parse(diff.patch).each do |p|
+        puts p.changed_lines.inspect
+      end
+    end
 
     def build_todos(combination)
       combination.matches.map do |match|
