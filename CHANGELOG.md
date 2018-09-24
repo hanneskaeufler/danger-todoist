@@ -1,7 +1,5 @@
 ## master
 
-* find trailing/inline todos as well - hanneskaeufler
-
 ## 1.2.3
 
 * Update rubies to run in CI - hanneskaeufler
