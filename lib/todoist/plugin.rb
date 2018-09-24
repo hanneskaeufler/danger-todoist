@@ -146,7 +146,7 @@ module Danger
     end
 
     def finders
-      [DiffTodoFinder, DiffInlineTodoFinder]
+      [DiffTodoFinder]
     end
   end
 
