@@ -2,25 +2,27 @@ module Danger
   # Identify todos in a set of diffs
   class DiffTodoFinder
     def initialize(keywords)
-      @keywords = keywords
+      @regexp = todo_regexp(keywords)
     end
 
     def call(diffs)
-      todos = []
-      regexp = todo_regexp
-      diffs.each do |diff|
-        matches = diff.patch.scan(regexp)
-        next if matches.empty?
-
-        matches.each do |match|
-          puts diff.inspect
-          todos << Danger::Todo.new(diff.path, clean_todo_text(match), 5)
+      possible_todos(diffs)
+        .map do |combination|
+          puts combination.diff.inspect
+          combination.matches.map do |match|
+            Danger::Todo.new(combination.diff.path, clean_todo_text(match), 5)
+          end
         end
-      end
-      todos
+        .flatten
     end
 
     private
+
+    def possible_todos(diffs)
+      diffs
+        .map { |diff| MatchesInDiff.new(diff, diff.patch.scan(@regexp)) }
+        .reject { |combination| combination.matches.empty? }
+    end
 
     def clean_todo_text(match)
       comment_indicator, _, entire_todo = match
@@ -34,14 +36,17 @@ module Danger
     # used: http://rubular.com/r/DPkoE2ztpn
     # the regexp uses backreferences to match the comment indicator multiple
     # times if possible
-    def todo_regexp
+    def todo_regexp(keywords)
       /
       (?<comment_indicator>^\+\s*[^a-z0-9\+\s]+)
       (\n\+)?\s+
-      (?<todo_indicator>#{@keywords.join("|")})[\s:]{1}
+      (?<todo_indicator>#{keywords.join("|")})[\s:]{1}
       (?<entire_text>(?<text>[^\n]*)
       (?<rest>\n\k<comment_indicator>\s*[\w .]*)*)
       /ixm
     end
+  end
+
+  class MatchesInDiff < Struct.new(:diff, :matches)
   end
 end
