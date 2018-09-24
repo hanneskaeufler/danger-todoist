@@ -80,6 +80,8 @@ end
 def sample_diff(patch)
   Git::Diff::DiffFile.new(
     "base",
+    src: "src",
+    dst: "dst",
     path:  "some/file.rb",
     patch: patch
   )

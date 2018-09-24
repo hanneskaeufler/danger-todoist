@@ -13,7 +13,9 @@ module Danger
         next if matches.empty?
 
         matches.each do |match|
-          todos << Danger::Todo.new(diff.path, clean_todo_text(match))
+          pp diff.src
+          pp diff.dst
+          todos << Danger::Todo.new(diff.path, clean_todo_text(match), 5)
         end
       end
       todos

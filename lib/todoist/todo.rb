@@ -1,4 +1,4 @@
 module Danger
-  class Todo < Struct.new(:file, :text)
+  class Todo < Struct.new(:file, :text, :line_number)
   end
 end
