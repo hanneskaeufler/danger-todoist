@@ -78,6 +78,7 @@ def markdowns
 end
 
 def sample_diff(patch)
+  # TODO: Figure it out
   Git::Diff::DiffFile.new(
     "base",
     src: "src",
