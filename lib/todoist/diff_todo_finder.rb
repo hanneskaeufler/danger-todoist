@@ -6,22 +6,23 @@ module Danger
     end
 
     def call(diffs)
-      possible_todos(diffs)
-        .map do |combination|
-          puts combination.diff.inspect
-          combination.matches.map do |match|
-            Danger::Todo.new(combination.diff.path, clean_todo_text(match), 5)
-          end
-        end
+      diffs
+        .map { |diff| MatchesInDiff.new(diff, diff.patch.scan(@regexp)) }
+        .reject { |combination| combination.matches.empty? }
+        .map { |combination| build_todos(combination) }
         .flatten
     end
 
     private
 
-    def possible_todos(diffs)
-      diffs
-        .map { |diff| MatchesInDiff.new(diff, diff.patch.scan(@regexp)) }
-        .reject { |combination| combination.matches.empty? }
+    def build_todos(combination)
+      combination.matches.map do |match|
+        build_todo(combination.diff.path, match)
+      end
+    end
+
+    def build_todo(path, match)
+      Danger::Todo.new(path, clean_todo_text(match), 5)
     end
 
     def clean_todo_text(match)
