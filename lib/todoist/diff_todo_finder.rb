@@ -9,7 +9,6 @@ module Danger
 
     def call(diffs)
       diffs
-        .each { |diff| debug(diff) }
         .map { |diff| MatchesInDiff.new(diff, diff.patch.scan(@regexp)) }
         .select(&:todo_matches?)
         .map(&:all_todos)
@@ -17,12 +16,6 @@ module Danger
     end
 
     private
-
-    def debug(diff)
-      # GitDiffParser::Patches.new(diff.patch).each do |p|
-      #   puts p.changed_lines.inspect
-      # end
-    end
 
     # this is quite a mess now ... I knew it would haunt me.
     # to aid debugging, this online regexr can be
@@ -54,9 +47,11 @@ module Danger
 
     def line_number(match)
       _, todo_indicator = match
+      # TODO: What if there are multiple matching lines?
       GitDiffParser::Patch.new(diff.patch).changed_lines.each do |line|
         return line.number if line.content =~ /#{todo_indicator}/
       end
+      # TODO: thats not gonna fly
       -1
     end
 
