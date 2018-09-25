@@ -1,0 +1,36 @@
+diff --git a/lib/todoist/diff_todo_finder.rb b/lib/todoist/diff_todo_finder.rb
+index b58809b..1ecc4f0 100644
+--- a/lib/todoist/diff_todo_finder.rb
++++ b/lib/todoist/diff_todo_finder.rb
+@@ -9,7 +9,6 @@ def initialize(keywords)
+ 
+     def call(diffs)
+       diffs
+-        .each { |diff| debug(diff) }
+         .map { |diff| MatchesInDiff.new(diff, diff.patch.scan(@regexp)) }
+         .select(&:todo_matches?)
+         .map(&:all_todos)
+@@ -18,12 +17,6 @@ def call(diffs)
+ 
+     private
+ 
+-    def debug(diff)
+-      # GitDiffParser::Patches.new(diff.patch).each do |p|
+-      #   puts p.changed_lines.inspect
+-      # end
+-    end
+-
+     # this is quite a mess now ... I knew it would haunt me.
+     # to aid debugging, this online regexr can be
+     # used: http://rubular.com/r/DPkoE2ztpn
+@@ -54,9 +47,11 @@ def all_todos
+ 
+     def line_number(match)
+       _, todo_indicator = match
++      # TODO: What if there are multiple matching lines?
+       GitDiffParser::Patch.new(diff.patch).changed_lines.each do |line|
+         return line.number if line.content =~ /#{todo_indicator}/
+       end
++      # TODO: thats not gonna fly
+       -1
+     end
