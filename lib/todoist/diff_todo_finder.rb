@@ -52,11 +52,19 @@ module Danger
 
     private
 
-    def build_todo(path, match)
-      Danger::Todo.new(path, clean_todo_text(match), 5)
+    def line_number(match)
+      _, todo_indicator = match
+      GitDiffParser::Patch.new(diff.patch).changed_lines.each do |line|
+        return line.number if line.content =~ /#{todo_indicator}/
+      end
+      -1
     end
 
-    def clean_todo_text(match)
+    def build_todo(path, match)
+      Danger::Todo.new(path, cleaned_todo_text(match), line_number(match))
+    end
+
+    def cleaned_todo_text(match)
       comment_indicator, _, entire_todo = match
       entire_todo.gsub(comment_indicator, "")
                  .delete("\n")

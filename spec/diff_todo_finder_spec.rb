@@ -26,7 +26,7 @@ module Danger
         todos = subject.call([diff])
 
         expect(todos).to_not be_empty
-        expect(todos.first.line_number).to be 5
+        expect(todos.first.line_number).to be 0
       end
 
       it "doesnt crash but also doesnt find anything with empty keywords" do
