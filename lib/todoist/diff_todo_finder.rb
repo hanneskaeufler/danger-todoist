@@ -11,34 +11,17 @@ module Danger
       diffs
         .each { |diff| debug(diff) }
         .map { |diff| MatchesInDiff.new(diff, diff.patch.scan(@regexp)) }
-        .select(&:has_todo_matches?)
-        .map { |combination| build_todos(combination) }
+        .select(&:todo_matches?)
+        .map(&:all_todos)
         .flatten
     end
 
     private
 
     def debug(diff)
-      GitDiffParser::Patches.parse(diff.patch).each do |p|
-        puts p.changed_lines.inspect
-      end
-    end
-
-    def build_todos(combination)
-      combination.matches.map do |match|
-        build_todo(combination.diff.path, match)
-      end
-    end
-
-    def build_todo(path, match)
-      Danger::Todo.new(path, clean_todo_text(match), 5)
-    end
-
-    def clean_todo_text(match)
-      comment_indicator, _, entire_todo = match
-      entire_todo.gsub(comment_indicator, "")
-                 .delete("\n")
-                 .strip
+      # GitDiffParser::Patches.new(diff.patch).each do |p|
+      #   puts p.changed_lines.inspect
+      # end
     end
 
     # this is quite a mess now ... I knew it would haunt me.
@@ -57,9 +40,27 @@ module Danger
     end
   end
 
+  # Encapsulates a diff with possible todos
   class MatchesInDiff < Struct.new(:diff, :matches)
-    def has_todo_matches?
+    def todo_matches?
       !matches.empty?
+    end
+
+    def all_todos
+      matches.map { |match| build_todo(diff.path, match) }
+    end
+
+    private
+
+    def build_todo(path, match)
+      Danger::Todo.new(path, clean_todo_text(match), 5)
+    end
+
+    def clean_todo_text(match)
+      comment_indicator, _, entire_todo = match
+      entire_todo.gsub(comment_indicator, "")
+                 .delete("\n")
+                 .strip
     end
   end
 end
