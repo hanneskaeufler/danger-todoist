@@ -19,6 +19,9 @@ Gem::Specification.new do |spec|
   spec.required_ruby_version = ">= 2.0.0"
 
   spec.add_runtime_dependency "danger-plugin-api", "~> 1.0"
+  # TODO: I'd rather not have this here ...
+  # because it's probably just a bit of code that we can reimplement
+  # or steal
   spec.add_runtime_dependency "git_diff_parser", "~> 3.1.0"
 
   # General ruby development
