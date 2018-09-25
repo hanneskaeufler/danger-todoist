@@ -11,7 +11,7 @@ module Danger
       diffs
         .each { |diff| debug(diff) }
         .map { |diff| MatchesInDiff.new(diff, diff.patch.scan(@regexp)) }
-        .reject { |combination| combination.matches.empty? }
+        .select(&:has_todo_matches?)
         .map { |combination| build_todos(combination) }
         .flatten
     end
@@ -58,5 +58,8 @@ module Danger
   end
 
   class MatchesInDiff < Struct.new(:diff, :matches)
+    def has_todo_matches?
+      !matches.empty?
+    end
   end
 end
