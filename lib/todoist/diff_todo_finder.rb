@@ -48,7 +48,7 @@ module Danger
     def line_number(match)
       _, _, first_text = match
       # TODO: What if there are multiple matching lines?
-      GitDiffParser::Patch.new(diff.patch).changed_lines.each do |line|
+      Patch.new(diff.patch).changed_lines.each do |line|
         return line.number if line.content =~ /#{first_text}/
       end
       # TODO: thats not gonna fly
@@ -64,6 +64,47 @@ module Danger
       entire_todo.gsub(comment_indicator, "")
                  .delete("\n")
                  .strip
+    end
+
+    # Parsed patch
+    class Patch
+      RANGE_INFORMATION_LINE = /^@@ .+\+(?<line_number>\d+),/
+      MODIFIED_LINE = /^\+(?!\+|\+)/
+      REMOVED_LINE = /^[-]/
+      NOT_REMOVED_LINE = /^[^-]/
+
+      def initialize(body)
+        @body = body
+      end
+
+      def changed_lines
+        line_number = 0
+
+        lines_with_index
+          .each_with_object([]) do |(content, patch_position), lines|
+            case content
+            when RANGE_INFORMATION_LINE
+              line_number = Regexp.last_match[:line_number].to_i
+            when MODIFIED_LINE
+              lines << Line.new(content, line_number, patch_position)
+              line_number += 1
+            when NOT_REMOVED_LINE
+              line_number += 1
+            end
+          end
+      end
+
+      def lines
+        @body.lines
+      end
+
+      def lines_with_index
+        lines.each_with_index
+      end
+    end
+
+    # Parsed line
+    class Line < Struct.new(:content, :number, :patch_position)
     end
   end
 end
