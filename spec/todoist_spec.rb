@@ -80,7 +80,7 @@ PATCH
               "#### Todos left in files",
               "- some/file.rb",
               "  - Line 0: some todo",
-              "  - Line 0: more todo in same file",
+              "  - Line 3: more todo in same file",
               "- another/stuff.rb",
               "  - Line 0: another todo"
             ]

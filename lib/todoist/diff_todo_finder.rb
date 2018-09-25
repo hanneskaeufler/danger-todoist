@@ -46,10 +46,10 @@ module Danger
     private
 
     def line_number(match)
-      _, todo_indicator = match
+      _, _, first_text = match
       # TODO: What if there are multiple matching lines?
       GitDiffParser::Patch.new(diff.patch).changed_lines.each do |line|
-        return line.number if line.content =~ /#{todo_indicator}/
+        return line.number if line.content =~ /#{first_text}/
       end
       # TODO: thats not gonna fly
       -1
