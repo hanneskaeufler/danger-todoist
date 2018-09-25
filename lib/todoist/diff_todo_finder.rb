@@ -1,5 +1,3 @@
-require "git_diff_parser"
-
 module Danger
   # Identify todos in a set of diffs
   class DiffTodoFinder
