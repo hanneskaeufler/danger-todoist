@@ -40,7 +40,7 @@ module Danger
     end
   end
 
-  # Encapsulates a diff with possible todos
+  # Identify todos in a single diff
   class MatchesInDiff < Struct.new(:diff, :matches)
     def todo_matches?
       !matches.empty?
