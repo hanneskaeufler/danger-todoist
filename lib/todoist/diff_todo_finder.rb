@@ -77,6 +77,7 @@ module Danger
         @body = body
       end
 
+      # rubocop:disable Metrics/MethodLength
       def changed_lines
         line_number = 0
 
@@ -93,6 +94,7 @@ module Danger
             end
           end
       end
+      # rubocop:enable Metrics/MethodLength
 
       def lines
         @body.lines
