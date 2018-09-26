@@ -26,7 +26,7 @@ module Danger
       (\n\+)?\s+
       (?<todo_indicator>#{keywords.join("|")})[\s:]{1}
       (?<entire_text>(?<text>[^\n]*)
-      (?<rest>\n\k<comment_indicator>\s*[\w .]*)*)
+      (?<rest>\n\k<comment_indicator>\s*[\w .']*)*)
       /ixm
     end
   end

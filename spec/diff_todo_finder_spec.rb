@@ -127,13 +127,18 @@ PATCH
 + # TODO: this is a
 + # multiline comment as well
 + function bla() {};
++  # TODO: I'd rather not have this here ...
++  # because it's probably just a bit of code that we can reimplement
++  # or steal
 PATCH
 
         todos = subject.call([sample_diff(patch)])
 
         expect(todos.map(&:text))
           .to eql(["this should be parsed as a single item.",
-                   "this is a multiline comment as well"])
+                   "this is a multiline comment as well",
+                   "I'd rather not have this here ... because it's probably "\
+                   "just a bit of code that we can reimplement or steal"])
       end
     end
   end
