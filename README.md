@@ -68,4 +68,4 @@ todoist.todos.each { |todo| puts todo.text }</pre>
 ## Licence
 
 This project is MIT licenced. Parts of the code (see class `Patch`) are heavily
-inspired by [https://github.com/packsaddle/ruby-git_diff_parser](ruby-git_diff_parser).
+inspired by [ruby-git_diff_parser](https://github.com/packsaddle/ruby-git_diff_parser).
