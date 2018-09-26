@@ -65,4 +65,7 @@ todoist.todos.each { |todo| puts todo.text }</pre>
 4. Use `bundle exec guard` to automatically have tests run as you make changes.
 5. Make your changes.
 
+## Licence
 
+This project is MIT licenced. Parts of the code (see class `Patch`) are heavily
+inspired by [https://github.com/packsaddle/ruby-git_diff_parser](ruby-git_diff_parser).
