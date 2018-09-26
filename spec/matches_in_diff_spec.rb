@@ -15,8 +15,7 @@ module Danger
 
     describe "#all_todos" do
       it "returns the correct line number for the first todo" do
-        patch = File.read(File.expand_path("./sample_patch.diff", __dir__))
-        diff = sample_diff(patch)
+        diff = sample_diff_fixture("sample_patch.diff")
         subject = described_class.new(
           diff,
           [[
@@ -30,8 +29,7 @@ module Danger
       end
 
       it "returns the correct line number for the second todo" do
-        patch = File.read(File.expand_path("./sample_patch.diff", __dir__))
-        diff = sample_diff(patch)
+        diff = sample_diff_fixture("sample_patch.diff")
         subject = described_class.new(
           diff,
           [[
@@ -42,6 +40,35 @@ module Danger
           ]]
         )
         expect(subject.all_todos.first.line_number).to eq 54
+      end
+
+      it "returns the correct line number for a multiline todo" do
+        diff = sample_diff_fixture("multiline_todo_patch.diff")
+        subject = described_class.new(
+          diff,
+          [[
+            "+      #",
+            "TODO",
+            " I'd rather not have this here ...\n+  # because it's probably "\
+            "just a bit of code that we can reimplement\n+  # or steal",
+            " I'd rather not have this here ...", "\n+  # or steal"
+          ]]
+        )
+        expect(subject.all_todos.first.line_number).to eq 22
+      end
+
+      it "raises when the todo string was not found in the patch" do
+        diff = sample_diff_fixture("sample_patch.diff")
+        subject = described_class.new(
+          diff,
+          [[
+            "+      #",
+            "TODO",
+            "",
+            "definately not contained in the patch"
+          ]]
+        )
+        expect { subject.all_todos }.to raise_error(TextNotFoundInPatchError)
       end
     end
   end

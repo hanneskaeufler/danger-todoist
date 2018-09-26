@@ -44,14 +44,15 @@ module Danger
     private
 
     def line_number(match)
-      _, _, first_text = match
+      _, _, _, first_text = match
       puts match.inspect
       # TODO: What if there are multiple matching lines?
       Patch.new(diff.patch).changed_lines.each do |line|
-        return line.number if line.content =~ /#{first_text}/
+        puts line
+        return line.number if line.content.include? first_text
       end
       # TODO: thats not gonna fly
-      -1
+      raise TextNotFoundInPatchError
     end
 
     def build_todo(path, match)
@@ -107,5 +108,8 @@ module Danger
     # Parsed line
     class Line < Struct.new(:content, :number, :patch_position)
     end
+  end
+
+  class TextNotFoundInPatchError < RuntimeError
   end
 end

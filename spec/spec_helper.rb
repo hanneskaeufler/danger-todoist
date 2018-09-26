@@ -87,3 +87,7 @@ def sample_diff(patch)
     patch: patch
   )
 end
+
+def sample_diff_fixture(filename)
+  sample_diff(File.read(File.expand_path("./fixtures/#{filename}", __dir__)))
+end
