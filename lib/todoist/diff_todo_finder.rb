@@ -45,13 +45,9 @@ module Danger
 
     def line_number(match)
       _, _, _, first_text = match
-      puts match.inspect
-      # TODO: What if there are multiple matching lines?
       Patch.new(diff.patch).changed_lines.each do |line|
-        puts line
         return line.number if line.content.include? first_text
       end
-      # TODO: thats not gonna fly
       raise TextNotFoundInPatchError
     end
 
