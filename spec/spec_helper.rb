@@ -80,7 +80,13 @@ end
 def sample_diff(patch)
   Git::Diff::DiffFile.new(
     "base",
+    src: "src",
+    dst: "dst",
     path:  "some/file.rb",
     patch: patch
   )
+end
+
+def sample_diff_fixture(filename)
+  sample_diff(File.read(File.expand_path("./fixtures/#{filename}", __dir__)))
 end

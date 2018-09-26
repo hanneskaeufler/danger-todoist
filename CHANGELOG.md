@@ -1,5 +1,8 @@
 ## master
 
+* Report line number for each todo - hanneskaeufler
+* Correctly report todo text with apostrophe - hanneskaeufler
+
 ## 1.2.3
 
 * Update rubies to run in CI - hanneskaeufler

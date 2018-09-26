@@ -96,7 +96,7 @@ module Danger
       markdown("- #{file}")
       todos
         .select(&:text)
-        .each { |todo| markdown("  - #{todo.text}") }
+        .each { |todo| markdown("  - Line #{todo.line_number}: #{todo.text}") }
     end
 
     def call_method_for_todos(method)
