@@ -28,6 +28,9 @@ module Danger
 
         expect(todos).to be_empty
       end
+
+      it "records line_numbers" do # TODO: Record line numbers
+      end
     end
   end
 end
