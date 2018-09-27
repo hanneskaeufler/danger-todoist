@@ -6,25 +6,23 @@ module Danger
 
     describe "#call" do
       it "finds todos inline after code" do
-        patch = <<PATCH
-+ function bla() {}; // TODO: fix this
-PATCH
+        patch = <<-PATCH
+        + function bla() {}; // TODO: fix this
+        PATCH
 
-        diff = sample_diff(patch)
-
-        todos = subject.call([diff])
+        todos = subject.call([sample_diff(patch)])
 
         expect(todos.first.text).to eq("fix this")
       end
 
       it "doesn't find floating todos" do
-        patch = <<PATCH
-+ # TODO: practice you must
-+ def practice
-+   return false
-+ end
-+ # FIXME: with you the force is
-PATCH
+        patch = <<-PATCH
+        + # TODO: practice you must
+        + def practice
+        +   return false
+        + end
+        + # FIXME: with you the force is
+        PATCH
 
         todos = subject.call([sample_diff(patch)])
 
