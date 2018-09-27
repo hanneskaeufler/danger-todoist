@@ -2,12 +2,12 @@ module Danger
   # Identify inline todos in a set of diffs
   class DiffInlineTodoFinder
     def initialize(keywords)
-      @keywords = keywords
+      @keywords = keywords.join("|")
     end
 
     def call(diffs)
       diffs.map do |diff|
-        diff.patch.scan(/\+ .{3,}(#{keywords})[\s:]{1}(.+)$/).map do |match|
+        diff.patch.scan(todo_regexp).map do |match|
           Todo.new(diff.path, match[1].strip)
         end
       end.flatten
@@ -15,8 +15,8 @@ module Danger
 
     private
 
-    def keywords
-      @keywords.join("|")
+    def todo_regexp
+      @regexp ||= /\+ .{3,}(#{@keywords})[\s:]{1}(.+)$/
     end
   end
 end

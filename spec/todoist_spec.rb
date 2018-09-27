@@ -21,6 +21,7 @@ module Danger
 + def foo
 + end
 + # TODO: more todo in same file
++ def foo; puts 1; end; # TODO: An inline todo
 PATCH
 
           modified = Git::Diff::DiffFile.new(
@@ -78,19 +79,20 @@ PATCH
           expect(markdowns).to eq(
             [
               "#### Todos left in files",
+              "- another/stuff.rb",
+              "  - Line 0: another todo",
               "- some/file.rb",
               "  - Line 0: some todo",
               "  - Line 3: more todo in same file",
-              "- another/stuff.rb",
-              "  - Line 0: another todo"
+              "  - Line 4: An inline todo"
             ]
           )
         end
 
         it "exposes todos to the dangerfile" do
-          expect(@todoist.todos.length).to eq(3)
-          expect(@todoist.todos.first.text).to eq("some todo")
-          expect(@todoist.todos.last.file).to eq("another/stuff.rb")
+          expect(@todoist.todos.length).to eq(4)
+          expect(@todoist.todos.first.text).to eq("another todo")
+          expect(@todoist.todos.last.file).to eq("some/file.rb")
         end
       end
 
