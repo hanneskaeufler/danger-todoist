@@ -47,14 +47,15 @@ module Danger
     end
 
     def line_number(match)
-      first_text = match[1]
-      puts first_text
+      text = match[1]
+      puts text
 
       Patch.new(diff.patch).changed_lines.each do |line|
         puts line.inspect
-        return line.number if line.content.include? first_text
+        return line.number if line.content.include? text
       end
-      raise TextNotFoundInPatchError
+      raise TextNotFoundInPatchError, "The matched todo text \"#{text}\""\
+        "wasn't found in the patch:\n#{diff.patch}"
     end
   end
 
