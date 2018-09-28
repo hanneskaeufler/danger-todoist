@@ -48,7 +48,6 @@ module Danger
     def line_number(match)
       first_text = match[1]
       puts first_text
-
       Patch.new(diff.patch).changed_lines.each do |line|
         puts line.inspect
         return line.number if line.content.include? first_text
