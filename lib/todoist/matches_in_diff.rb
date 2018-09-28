@@ -62,8 +62,7 @@ module Danger
   # Parsed patch
   class Patch
     RANGE_INFORMATION_LINE = /^@@ .+\+(?<line_number>\d+),/
-    MODIFIED_LINE = /^\+(?!\+|\+)/
-    REMOVED_LINE = /^[-]/
+    MODIFIED_LINE = /^\+(?!\+\+)/
     NOT_REMOVED_LINE = /^[^-]/
 
     def initialize(body)
