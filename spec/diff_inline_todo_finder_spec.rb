@@ -6,9 +6,7 @@ module Danger
 
     describe "#call" do
       it "finds todos inline after code" do
-        patch = <<-PATCH
-        + function bla() {}; // TODO: fix this
-        PATCH
+        patch = "+ function bla() {}; // TODO: fix this"
 
         todos = subject.call([sample_diff(patch)])
 
@@ -30,6 +28,9 @@ module Danger
       end
 
       it "records line_numbers" do # TODO: Record line numbers
+        todos = subject.call([sample_diff_fixture("inline_todo_patch.diff")])
+
+        expect(todos.map(&:line_number)).to eq [32]
       end
     end
   end

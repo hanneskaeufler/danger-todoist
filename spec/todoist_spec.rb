@@ -84,7 +84,7 @@ PATCH
               "- some/file.rb",
               "  - Line 0: some todo",
               "  - Line 3: more todo in same file",
-              "  - Line : An inline todo"
+              "  - Line 4: An inline todo"
             ]
           )
         end

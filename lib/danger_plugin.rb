@@ -1,4 +1,5 @@
-require "todoist/plugin"
-require "todoist/diff_todo_finder"
 require "todoist/diff_inline_todo_finder"
+require "todoist/diff_todo_finder"
+require "todoist/matches_in_diff"
+require "todoist/plugin"
 require "todoist/todo"
