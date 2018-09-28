@@ -21,11 +21,12 @@ module Danger
     include TodoBuilder
 
     def line_number(match)
-      _, _, _, first_text = match
+      _, _, _, text = match
       Patch.new(diff.patch).changed_lines.each do |line|
-        return line.number if line.content.include? first_text
+        return line.number if line.content.include? text
       end
-      raise TextNotFoundInPatchError
+      raise TextNotFoundInPatchError, "The matched todo text \"#{text}\""\
+        "wasn't found in the patch:\n#{diff.patch}"
     end
 
     def cleaned_todo_text(match)
