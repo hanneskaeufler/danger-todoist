@@ -1,5 +1,7 @@
 ## master
 
+## 1.3.0
+
 * Report line number for each todo - hanneskaeufler
 * Correctly report todo text with apostrophe - hanneskaeufler
 
