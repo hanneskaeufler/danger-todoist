@@ -1,5 +1,9 @@
 ## master
 
+## 2.0.0
+
+* Drop rubies below 2.3.8 from support - hanneskaeufler
+
 ## 1.3.0
 
 * Report line number for each todo - hanneskaeufler
