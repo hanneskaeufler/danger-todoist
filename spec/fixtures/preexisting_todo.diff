@@ -1,0 +1,24 @@
+diff --git a/lib/todoist/diff_todo_finder.rb b/lib/todoist/diff_todo_finder.rb
+index b58809b..1ecc4f0 100644
+--- a/lib/todoist/diff_todo_finder.rb
++++ b/lib/todoist/diff_todo_finder.rb
+@@ -9,7 +9,6 @@ def initialize(keywords)
+ 
+     def call(diffs)
+       diffs
+-        .each { |diff| debug(diff) }
+         .map { |diff| MatchesInDiff.new(diff, diff.patch.scan(@regexp)) }
+         .select(&:todo_matches?)
+         .map(&:all_todos)
+@@ -54,9 +53,11 @@ def all_todos
+ 
+     def line_number(match)
+       _, todo_indicator = match
+       GitDiffParser::Patch.new(diff.patch).changed_lines.each do |line|
+         return line.number if line.content =~ /#{todo_indicator}/
+       end
++      # introducing a change with a newline right above a pre-existing TODO
++
+       # TODO: thats not gonna fly
+       -1
+     end
