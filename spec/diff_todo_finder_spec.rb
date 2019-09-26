@@ -141,7 +141,7 @@ PATCH
                    "just a bit of code that we can reimplement or steal"])
       end
 
-      it "ignores pre-existing todo strings found in the context lines of a patch" do
+      it "ignores pre-existing todo strings found in context lines of a patch" do
         diff = sample_diff_fixture("preexisting_todo.diff")
         todos = subject.call([diff])
         expect(todos).to be_empty
