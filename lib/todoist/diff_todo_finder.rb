@@ -10,7 +10,7 @@ module Danger
         .map do |diff|
           # Should only look for matches *within* the changed lines of a patch
           # (lines that begin with "+"), not the entire patch.
-          # The @regexp currently doesn't enforce this correctly in certain cases.
+          # The `todo_regexp` currently doesn't enforce this correctly in certain cases.
           matches = MatchesInDiff::Patch.new(diff.patch).changed_lines.map(&:content).join.scan(@regexp)
           MatchesInDiff.new(diff, matches)
         end
