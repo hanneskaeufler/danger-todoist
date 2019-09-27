@@ -1,6 +1,8 @@
 ## master
 
-* Fix incorrect TODO matching - allewun
+## 2.0.1
+
+* fix bug where existing todos in a patch were identified - allewun
 
 ## 2.0.0
 
