@@ -5,13 +5,26 @@ module Danger
       @regexp = todo_regexp(keywords)
     end
 
+    # rubocop:disable Metrics/MethodLength
     def call(diffs)
       diffs
-        .map { |diff| MatchesInDiff.new(diff, diff.patch.scan(@regexp)) }
+        .map do |diff|
+          # Should only look for matches *within* the changed lines of a patch
+          # (lines that begin with "+"), not the entire patch.
+          # The current regexp doesn't enforce this correctly in some cases.
+          patch = MatchesInDiff::Patch.new(diff.patch)
+          matches = patch.changed_lines
+                         .map(&:content)
+                         .join
+                         .scan(@regexp)
+
+          MatchesInDiff.new(diff, matches)
+        end
         .select(&:todo_matches?)
         .map(&:all_todos)
         .flatten
     end
+    # rubocop:enable Metrics/MethodLength
 
     private
 

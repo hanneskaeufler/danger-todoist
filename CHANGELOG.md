@@ -1,5 +1,7 @@
 ## master
 
+* Fix incorrect TODO matching - allewun
+
 ## 2.0.0
 
 * Drop rubies below 2.3.8 from support and require bundler 2 - hanneskaeufler
