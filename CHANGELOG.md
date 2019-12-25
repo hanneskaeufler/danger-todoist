@@ -1,5 +1,7 @@
 ## master
 
+* Drop ruby 2.3.x support - hanneskaeufler
+
 ## 2.0.1
 
 * fix bug where existing todos in a patch were identified - allewun
