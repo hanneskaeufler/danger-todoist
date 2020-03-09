@@ -1,0 +1,14 @@
+diff --git a/spec/diff_inline_todo_finder_spec.rb b/spec/diff_inline_todo_finder_spec.rb
+index 13150dc..121828c 100644
+--- a/spec/diff_inline_todo_finder_spec.rb
++++ b/spec/diff_inline_todo_finder_spec.rb
+@@ -28,6 +28,9 @@ module Danger
+ 
+         expect(todos).to be_empty
+       end
++
++      it "records line_numbers" do # TODO: Record line numbers
++      end
+     end
+   end
+ end

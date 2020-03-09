@@ -112,6 +112,7 @@ module Danger
                .map { |finder_class| finder_class.new(keywords) }
                .map { |finder| finder.call(diffs_of_interest) }
                .flatten
+               .sort_by(&:file)
     end
 
     def keywords
@@ -146,7 +147,7 @@ module Danger
     end
 
     def finders
-      [DiffTodoFinder]
+      [DiffTodoFinder, DiffInlineTodoFinder]
     end
   end
 
