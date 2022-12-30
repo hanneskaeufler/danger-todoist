@@ -12,9 +12,9 @@ Style/StringLiterals:
 Style/StructInheritance:
   Enabled: false
 
-PercentLiteralDelimiters:
+Style/PercentLiteralDelimiters:
   PreferredDelimiters:
-    "%":  ()
+    "%": ()
     "%i": ()
     "%q": ()
     "%Q": ()
