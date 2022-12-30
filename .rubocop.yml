@@ -12,6 +12,10 @@ Style/StringLiterals:
 Style/StructInheritance:
   Enabled: false
 
+RSpec/ExampleLength:
+  CountAsOne: ["heredoc"]
+  Max: 12
+
 Style/PercentLiteralDelimiters:
   PreferredDelimiters:
     "%": ()
