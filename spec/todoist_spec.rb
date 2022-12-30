@@ -1,4 +1,4 @@
-require File.expand_path("../spec_helper", __FILE__)
+require File.expand_path("spec_helper", __dir__)
 
 # rubocop:disable Metrics/ModuleLength
 module Danger
@@ -25,12 +25,12 @@ PATCH
 
           modified = Git::Diff::DiffFile.new(
             "base",
-            path:  "some/file.rb",
+            path: "some/file.rb",
             patch: patch
           )
           added = Git::Diff::DiffFile.new(
             "base",
-            path:  "another/stuff.rb",
+            path: "another/stuff.rb",
             patch: "+ # fixme: another todo"
           )
 
@@ -98,7 +98,7 @@ PATCH
         before do
           modified = Git::Diff::DiffFile.new(
             "base",
-            path:  "some/file.rb",
+            path: "some/file.rb",
             patch: "+ some added line"
           )
           allow(@dangerfile.git).to receive(:diff_for_file)

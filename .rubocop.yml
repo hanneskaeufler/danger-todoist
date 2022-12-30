@@ -1,3 +1,6 @@
+AllCops:
+  NewCops: enable
+
 Style/StringLiterals:
   EnforcedStyle: double_quotes
   Enabled: true
@@ -17,5 +20,5 @@ PercentLiteralDelimiters:
     "%W": ()
     "%x": ()
 
-Layout/IndentHeredoc:
+Layout/HeredocIndentation:
   Enabled: false

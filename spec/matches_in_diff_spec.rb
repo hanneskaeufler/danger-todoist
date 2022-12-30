@@ -1,4 +1,4 @@
-require File.expand_path("../spec_helper", __FILE__)
+require File.expand_path("spec_helper", __dir__)
 
 module Danger
   # rubocop:disable Metrics/BlockLength
@@ -49,7 +49,7 @@ module Danger
           [[
             "+      #",
             "TODO",
-            " I'd rather not have this here ...\n+  # because it's probably "\
+            " I'd rather not have this here ...\n+  # because it's probably " \
             "just a bit of code that we can reimplement\n+  # or steal",
             " I'd rather not have this here ...", "\n+  # or steal"
           ]]

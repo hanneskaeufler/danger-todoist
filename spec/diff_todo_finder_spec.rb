@@ -1,4 +1,4 @@
-require File.expand_path("../spec_helper", __FILE__)
+require File.expand_path("spec_helper", __dir__)
 
 # rubocop:disable Metrics/ModuleLength
 module Danger
@@ -137,7 +137,7 @@ PATCH
         expect(todos.map(&:text))
           .to eql(["this should be parsed as a single item.",
                    "this is a multiline comment as well",
-                   "I'd rather not have this here ... because it's probably "\
+                   "I'd rather not have this here ... because it's probably " \
                    "just a bit of code that we can reimplement or steal"])
       end
 

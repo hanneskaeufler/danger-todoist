@@ -35,7 +35,7 @@ module Danger
     # times if possible
     def todo_regexp(keywords)
       /
-      (?<comment_indicator>^\+\s*[^a-z0-9\+\s]+)
+      (?<comment_indicator>^\+\s*[^a-z0-9+\s]+)
       (\n\+)?\s+
       (?<todo_indicator>#{keywords.join("|")})[\s:]{1}
       (?<entire_text>(?<text>[^\n]*)
@@ -79,7 +79,7 @@ module Danger
     class Patch
       RANGE_INFORMATION_LINE = /^@@ .+\+(?<line_number>\d+),/
       MODIFIED_LINE = /^\+(?!\+|\+)/
-      REMOVED_LINE = /^[-]/
+      REMOVED_LINE = /^-/
       NOT_REMOVED_LINE = /^[^-]/
 
       def initialize(body)
