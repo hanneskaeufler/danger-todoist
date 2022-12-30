@@ -25,6 +25,6 @@ jobs:
         ruby-version: ${{ matrix.ruby-version }}
         bundler-cache: true
     - name: Update rubygems
-      run: gem update --system
+      run: gem update --system && bundle
     - name: Run tests
       run: bundle exec rake spec
