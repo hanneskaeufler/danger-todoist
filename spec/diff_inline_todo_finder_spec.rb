@@ -1,8 +1,10 @@
-require File.expand_path("../spec_helper", __FILE__)
+# frozen_string_literal: true
+
+require File.expand_path("spec_helper", __dir__)
 
 module Danger
   describe Danger::DiffInlineTodoFinder do
-    let(:subject) { Danger::DiffInlineTodoFinder.new(%w(TODO FIXME)) }
+    subject(:finder) { described_class.new(%w(TODO FIXME)) }
 
     describe "#call" do
       it "finds todos inline after code" do
@@ -12,7 +14,7 @@ PATCH
 
         diff = sample_diff(patch)
 
-        todos = subject.call([diff])
+        todos = finder.call([diff])
 
         expect(todos.first.text).to eq("fix this")
       end
@@ -26,7 +28,7 @@ PATCH
 + # FIXME: with you the force is
 PATCH
 
-        todos = subject.call([sample_diff(patch)])
+        todos = finder.call([sample_diff(patch)])
 
         expect(todos).to be_empty
       end

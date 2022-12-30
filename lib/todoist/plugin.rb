@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Danger
   #
   # This is a danger plugin to detect any TODO/FIXME entries left in the code.
@@ -28,7 +30,7 @@ module Danger
   # @tags todos, fixme
   #
   class DangerTodoist < Plugin
-    DEFAULT_MESSAGE = "There remain todo items in the modified code.".freeze
+    DEFAULT_MESSAGE = "There remain todo items in the modified code."
     DEFAULT_KEYWORDS = %w(TODO FIXME).freeze
 
     #

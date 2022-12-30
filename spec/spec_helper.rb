@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "simplecov"
 if ENV["COVERAGE"]
   SimpleCov.start do
@@ -6,9 +8,9 @@ if ENV["COVERAGE"]
 end
 
 require "pathname"
-ROOT = Pathname.new(File.expand_path("../../", __FILE__))
-$LOAD_PATH.unshift((ROOT + "lib").to_s)
-$LOAD_PATH.unshift((ROOT + "spec").to_s)
+ROOT = Pathname.new(File.expand_path("..", __dir__))
+$LOAD_PATH.unshift("#{ROOT}lib".to_s)
+$LOAD_PATH.unshift("#{ROOT}spec".to_s)
 
 require "bundler/setup"
 require "pry"
@@ -82,7 +84,7 @@ def sample_diff(patch)
     "base",
     src: "src",
     dst: "dst",
-    path:  "some/file.rb",
+    path: "some/file.rb",
     patch: patch
   )
 end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Danger
   # Identify inline todos in a set of diffs
   class DiffInlineTodoFinder

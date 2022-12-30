@@ -1,11 +1,12 @@
-require File.expand_path("../spec_helper", __FILE__)
+# frozen_string_literal: true
+
+require File.expand_path("spec_helper", __dir__)
 
 # rubocop:disable Metrics/ModuleLength
 module Danger
-  # rubocop:disable Metrics/BlockLength
   describe Danger::DangerTodoist do
-    it "should be a plugin" do
-      expect(Danger::DangerTodoist.new(nil)).to be_a Danger::Plugin
+    it "is a plugin" do
+      expect(described_class.new(nil)).to be_a Danger::Plugin
     end
 
     describe "with Dangerfile" do
@@ -14,7 +15,7 @@ module Danger
         @todoist = @dangerfile.todoist
       end
 
-      context "changed files containing newly introduced todos" do
+      context "with changed files containing newly introduced todos" do
         before do
           patch = <<PATCH
 + # TODO: some todo
@@ -25,12 +26,12 @@ PATCH
 
           modified = Git::Diff::DiffFile.new(
             "base",
-            path:  "some/file.rb",
+            path: "some/file.rb",
             patch: patch
           )
           added = Git::Diff::DiffFile.new(
             "base",
-            path:  "another/stuff.rb",
+            path: "another/stuff.rb",
             patch: "+ # fixme: another todo"
           )
 
@@ -88,17 +89,19 @@ PATCH
         end
 
         it "exposes todos to the dangerfile" do
-          expect(@todoist.todos.length).to eq(3)
-          expect(@todoist.todos.first.text).to eq("some todo")
-          expect(@todoist.todos.last.file).to eq("another/stuff.rb")
+          expect(@todoist.todos).to match_array([
+                                                  Todo.new("some/file.rb", "some todo", 0),
+                                                  Todo.new("some/file.rb", "more todo in same file", 3),
+                                                  Todo.new("another/stuff.rb", "another todo", 0)
+                                                ])
         end
       end
 
-      context "changed files not containing a todo" do
+      context "with changed files not containing a todo" do
         before do
           modified = Git::Diff::DiffFile.new(
             "base",
-            path:  "some/file.rb",
+            path: "some/file.rb",
             patch: "+ some added line"
           )
           allow(@dangerfile.git).to receive(:diff_for_file)
@@ -109,11 +112,15 @@ PATCH
           allow(@dangerfile.git).to receive(:added_files).and_return([])
         end
 
-        it "reports nothing" do
+        it "doesnt't report any warnings" do
           @todoist.warn_for_todos
-          @todoist.print_todos_table
 
           expect(warnings).to be_empty
+        end
+
+        it "doesn't report any markdown content" do
+          @todoist.print_todos_table
+
           expect(markdowns).to be_empty
         end
       end
@@ -126,29 +133,31 @@ PATCH
         @todoist.fail_for_todos
         @todoist.print_todos_table
 
-        expect(warnings).to be_empty
-        expect(failures).to be_empty
-        expect(markdowns).to be_empty
+        expect(warnings + failures + markdowns).to be_empty
       end
 
-      it "does not raise when git raises, but warns" do
+      it "does not raise when git raises" do
         invalid = [nil, 0, false]
         allow(@dangerfile.git).to receive(:modified_files).and_return(invalid)
         allow(@dangerfile.git).to receive(:added_files).and_return(invalid)
 
-        expect { @todoist.warn_for_todos }.to_not raise_error
+        expect { @todoist.warn_for_todos }.not_to raise_error
+      end
+
+      it "warns when git raises" do
+        invalid = [nil, 0, false]
+        allow(@dangerfile.git).to receive(:modified_files).and_return(invalid)
+        allow(@dangerfile.git).to receive(:added_files).and_return(invalid)
+
+        @todoist.warn_for_todos
+
         expect(markdowns).to include(
-          "* danger-todoist was unable to determine diff for \"nil\"."
-        )
-        expect(markdowns).to include(
-          "* danger-todoist was unable to determine diff for \"0\"."
-        )
-        expect(markdowns).to include(
+          "* danger-todoist was unable to determine diff for \"nil\".",
+          "* danger-todoist was unable to determine diff for \"0\".",
           "* danger-todoist was unable to determine diff for \"false\"."
         )
       end
     end
   end
-  # rubocop:enable Metrics/BlockLength
 end
 # rubocop:enable Metrics/ModuleLength

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Danger
   # Identify todos in a set of diffs
   class DiffTodoFinder
@@ -35,7 +37,7 @@ module Danger
     # times if possible
     def todo_regexp(keywords)
       /
-      (?<comment_indicator>^\+\s*[^a-z0-9\+\s]+)
+      (?<comment_indicator>^\+\s*[^a-z0-9+\s]+)
       (\n\+)?\s+
       (?<todo_indicator>#{keywords.join("|")})[\s:]{1}
       (?<entire_text>(?<text>[^\n]*)
@@ -77,10 +79,10 @@ module Danger
 
     # Parsed patch
     class Patch
-      RANGE_INFORMATION_LINE = /^@@ .+\+(?<line_number>\d+),/
-      MODIFIED_LINE = /^\+(?!\+|\+)/
-      REMOVED_LINE = /^[-]/
-      NOT_REMOVED_LINE = /^[^-]/
+      RANGE_INFORMATION_LINE = /^@@ .+\+(?<line_number>\d+),/.freeze
+      MODIFIED_LINE = /^\+(?!\+|\+)/.freeze
+      REMOVED_LINE = /^-/.freeze
+      NOT_REMOVED_LINE = /^[^-]/.freeze
 
       def initialize(body)
         @body = body

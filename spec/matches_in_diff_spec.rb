@@ -1,7 +1,8 @@
-require File.expand_path("../spec_helper", __FILE__)
+# frozen_string_literal: true
+
+require File.expand_path("spec_helper", __dir__)
 
 module Danger
-  # rubocop:disable Metrics/BlockLength
   describe Danger::MatchesInDiff do
     describe "#todo_matches?" do
       it "is false for no matches" do
@@ -49,7 +50,7 @@ module Danger
           [[
             "+      #",
             "TODO",
-            " I'd rather not have this here ...\n+  # because it's probably "\
+            " I'd rather not have this here ...\n+  # because it's probably " \
             "just a bit of code that we can reimplement\n+  # or steal",
             " I'd rather not have this here ...", "\n+  # or steal"
           ]]
@@ -72,5 +73,4 @@ module Danger
       end
     end
   end
-  # rubocop:enable Metrics/BlockLength
 end

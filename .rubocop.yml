@@ -1,3 +1,10 @@
+require:
+  - rubocop-rake
+  - rubocop-rspec
+
+AllCops:
+  NewCops: enable
+
 Style/StringLiterals:
   EnforcedStyle: double_quotes
   Enabled: true
@@ -5,9 +12,13 @@ Style/StringLiterals:
 Style/StructInheritance:
   Enabled: false
 
-PercentLiteralDelimiters:
+RSpec/ExampleLength:
+  CountAsOne: ["heredoc"]
+  Max: 12
+
+Style/PercentLiteralDelimiters:
   PreferredDelimiters:
-    "%":  ()
+    "%": ()
     "%i": ()
     "%q": ()
     "%Q": ()
@@ -17,5 +28,5 @@ PercentLiteralDelimiters:
     "%W": ()
     "%x": ()
 
-Layout/IndentHeredoc:
+Layout/HeredocIndentation:
   Enabled: false
