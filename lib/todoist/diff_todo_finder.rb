@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Danger
   # Identify todos in a set of diffs
   class DiffTodoFinder
@@ -77,10 +79,10 @@ module Danger
 
     # Parsed patch
     class Patch
-      RANGE_INFORMATION_LINE = /^@@ .+\+(?<line_number>\d+),/
-      MODIFIED_LINE = /^\+(?!\+|\+)/
-      REMOVED_LINE = /^-/
-      NOT_REMOVED_LINE = /^[^-]/
+      RANGE_INFORMATION_LINE = /^@@ .+\+(?<line_number>\d+),/.freeze
+      MODIFIED_LINE = /^\+(?!\+|\+)/.freeze
+      REMOVED_LINE = /^-/.freeze
+      NOT_REMOVED_LINE = /^[^-]/.freeze
 
       def initialize(body)
         @body = body
