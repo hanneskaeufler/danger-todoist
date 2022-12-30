@@ -89,9 +89,11 @@ PATCH
         end
 
         it "exposes todos to the dangerfile" do
-          expect(@todoist.todos.length).to eq(3)
-          expect(@todoist.todos.first.text).to eq("some todo")
-          expect(@todoist.todos.last.file).to eq("another/stuff.rb")
+          expect(@todoist.todos).to match_array([
+                                                  Todo.new("some/file.rb", "some todo", 0),
+                                                  Todo.new("some/file.rb", "more todo in same file", 3),
+                                                  Todo.new("another/stuff.rb", "another todo", 0)
+                                                ])
         end
       end
 
@@ -110,11 +112,15 @@ PATCH
           allow(@dangerfile.git).to receive(:added_files).and_return([])
         end
 
-        it "reports nothing" do
+        it "doesnt't report any warnings" do
           @todoist.warn_for_todos
-          @todoist.print_todos_table
 
           expect(warnings).to be_empty
+        end
+
+        it "doesn't report any markdown content" do
+          @todoist.print_todos_table
+
           expect(markdowns).to be_empty
         end
       end
@@ -132,12 +138,21 @@ PATCH
         expect(markdowns).to be_empty
       end
 
-      it "does not raise when git raises, but warns" do
+      it "does not raise when git raises" do
         invalid = [nil, 0, false]
         allow(@dangerfile.git).to receive(:modified_files).and_return(invalid)
         allow(@dangerfile.git).to receive(:added_files).and_return(invalid)
 
         expect { @todoist.warn_for_todos }.not_to raise_error
+      end
+
+      it "warns when git raises" do
+        invalid = [nil, 0, false]
+        allow(@dangerfile.git).to receive(:modified_files).and_return(invalid)
+        allow(@dangerfile.git).to receive(:added_files).and_return(invalid)
+
+        @todoist.warn_for_todos
+
         expect(markdowns).to include(
           "* danger-todoist was unable to determine diff for \"nil\".",
           "* danger-todoist was unable to determine diff for \"0\".",
