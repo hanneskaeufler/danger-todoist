@@ -133,9 +133,7 @@ PATCH
         @todoist.fail_for_todos
         @todoist.print_todos_table
 
-        expect(warnings).to be_empty
-        expect(failures).to be_empty
-        expect(markdowns).to be_empty
+        expect(warnings + failures + markdowns).to be_empty
       end
 
       it "does not raise when git raises" do

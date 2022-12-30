@@ -27,10 +27,9 @@ module Danger
         todos = subject.call([diff])
 
         expect(todos).not_to be_empty
-        expect(todos.first.line_number).to be 0
       end
 
-      it "doesnt crash but also doesnt find anything with empty keywords" do
+      it "doesn't crash but also doesn't find anything with empty keywords" do
         diff = sample_diff("+ # BUG some todo")
 
         subject = described_class.new([])
