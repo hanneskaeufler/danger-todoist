@@ -139,12 +139,8 @@ PATCH
 
         expect { @todoist.warn_for_todos }.not_to raise_error
         expect(markdowns).to include(
-          "* danger-todoist was unable to determine diff for \"nil\"."
-        )
-        expect(markdowns).to include(
-          "* danger-todoist was unable to determine diff for \"0\"."
-        )
-        expect(markdowns).to include(
+          "* danger-todoist was unable to determine diff for \"nil\".",
+          "* danger-todoist was unable to determine diff for \"0\".",
           "* danger-todoist was unable to determine diff for \"false\"."
         )
       end
