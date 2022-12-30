@@ -5,7 +5,7 @@ require File.expand_path("spec_helper", __dir__)
 # rubocop:disable Metrics/ModuleLength
 module Danger
   describe Danger::DiffTodoFinder do
-    let(:subject) do
+    subject(:finder) do
       described_class.new(%w(TODO FIXME))
     end
 
@@ -14,7 +14,7 @@ module Danger
         it "identifies a new '#{marker}' as a todo" do
           diff = sample_diff("+ # #{marker} some todo")
 
-          todos = subject.call([diff])
+          todos = finder.call([diff])
 
           expect(todos).not_to be_empty
         end
@@ -44,7 +44,7 @@ module Danger
         it "identifies todos in languages with '#{comment}' as comments" do
           diff = sample_diff("+ #{comment} TODO: some todo")
 
-          todos = subject.call([diff])
+          todos = finder.call([diff])
 
           expect(todos).not_to be_empty
         end
@@ -53,7 +53,7 @@ module Danger
       it "does not identify removed todos as a todo" do
         diff = sample_diff("- TODO: some todo")
 
-        todos = subject.call([diff])
+        todos = finder.call([diff])
 
         expect(todos).to be_empty
       end
@@ -74,7 +74,7 @@ module Danger
         it "does not identify occurences in '#{patch}'" do
           diff = sample_diff("some/file.rb")
 
-          todos = subject.call([diff])
+          todos = finder.call([diff])
 
           expect(todos).to be_empty
         end
@@ -83,7 +83,7 @@ module Danger
       it "identifies the todo text as well" do
         diff = sample_diff("+ # TODO: practice you must")
 
-        todos = subject.call([diff])
+        todos = finder.call([diff])
 
         expect(todos.first.text).to eql("practice you must")
       end
@@ -97,7 +97,7 @@ module Danger
 + # FIXME: with you the force is
 PATCH
 
-        todos = subject.call([sample_diff(patch)])
+        todos = finder.call([sample_diff(patch)])
 
         expect(todos.map(&:text))
           .to eql(["practice you must", "with you the force is"])
@@ -114,7 +114,7 @@ PATCH
 +  */
 PATCH
 
-        todos = subject.call([sample_diff(patch)])
+        todos = finder.call([sample_diff(patch)])
 
         expect(todos.map(&:text)).to eql(%w(something another))
       end
@@ -133,7 +133,7 @@ PATCH
 +  # or steal
 PATCH
 
-        todos = subject.call([sample_diff(patch)])
+        todos = finder.call([sample_diff(patch)])
 
         expect(todos.map(&:text))
           .to eql(["this should be parsed as a single item.",
@@ -144,7 +144,7 @@ PATCH
 
       it "ignores pre-existing todos found in the context lines of a patch" do
         diff = sample_diff_fixture("preexisting_todo.diff")
-        todos = subject.call([diff])
+        todos = finder.call([diff])
         expect(todos).to be_empty
       end
     end
