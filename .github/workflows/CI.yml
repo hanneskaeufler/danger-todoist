@@ -33,4 +33,4 @@ jobs:
     - name: Upload code coverage
       run: bundle exec codeclimate-test-reporter
       env:
-        CC_TEST_REPORTER_ID: cc5bcc4a6f121c4444dbf66868eef179f8bf86017b526c7dc50fa637a62a20b4
+        CODECLIMATE_REPO_TOKEN: cc5bcc4a6f121c4444dbf66868eef179f8bf86017b526c7dc50fa637a62a20b4
