@@ -4,7 +4,7 @@ require File.expand_path("spec_helper", __dir__)
 
 module Danger
   describe Danger::DiffInlineTodoFinder do
-    let(:subject) { Danger::DiffInlineTodoFinder.new(%w(TODO FIXME)) }
+    let(:subject) { described_class.new(%w(TODO FIXME)) }
 
     describe "#call" do
       it "finds todos inline after code" do

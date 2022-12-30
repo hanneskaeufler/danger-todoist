@@ -4,10 +4,9 @@ require File.expand_path("spec_helper", __dir__)
 
 # rubocop:disable Metrics/ModuleLength
 module Danger
-  # rubocop:disable Metrics/BlockLength
   describe Danger::DiffTodoFinder do
     let(:subject) do
-      Danger::DiffTodoFinder.new(%w(TODO FIXME))
+      described_class.new(%w(TODO FIXME))
     end
 
     describe "#call" do
@@ -17,7 +16,7 @@ module Danger
 
           todos = subject.call([diff])
 
-          expect(todos).to_not be_empty
+          expect(todos).not_to be_empty
         end
       end
 
@@ -27,7 +26,7 @@ module Danger
         subject = described_class.new(["BUG"])
         todos = subject.call([diff])
 
-        expect(todos).to_not be_empty
+        expect(todos).not_to be_empty
         expect(todos.first.line_number).to be 0
       end
 
@@ -47,7 +46,7 @@ module Danger
 
           todos = subject.call([diff])
 
-          expect(todos).to_not be_empty
+          expect(todos).not_to be_empty
         end
       end
 
@@ -150,6 +149,5 @@ PATCH
       end
     end
   end
-  # rubocop:enable Metrics/BlockLength
 end
 # rubocop:enable Metrics/ModuleLength

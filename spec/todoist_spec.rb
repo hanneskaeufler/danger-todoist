@@ -4,10 +4,9 @@ require File.expand_path("spec_helper", __dir__)
 
 # rubocop:disable Metrics/ModuleLength
 module Danger
-  # rubocop:disable Metrics/BlockLength
   describe Danger::DangerTodoist do
-    it "should be a plugin" do
-      expect(Danger::DangerTodoist.new(nil)).to be_a Danger::Plugin
+    it "is a plugin" do
+      expect(described_class.new(nil)).to be_a Danger::Plugin
     end
 
     describe "with Dangerfile" do
@@ -138,7 +137,7 @@ PATCH
         allow(@dangerfile.git).to receive(:modified_files).and_return(invalid)
         allow(@dangerfile.git).to receive(:added_files).and_return(invalid)
 
-        expect { @todoist.warn_for_todos }.to_not raise_error
+        expect { @todoist.warn_for_todos }.not_to raise_error
         expect(markdowns).to include(
           "* danger-todoist was unable to determine diff for \"nil\"."
         )
@@ -151,6 +150,5 @@ PATCH
       end
     end
   end
-  # rubocop:enable Metrics/BlockLength
 end
 # rubocop:enable Metrics/ModuleLength

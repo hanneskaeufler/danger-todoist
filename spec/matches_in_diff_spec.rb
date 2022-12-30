@@ -3,7 +3,6 @@
 require File.expand_path("spec_helper", __dir__)
 
 module Danger
-  # rubocop:disable Metrics/BlockLength
   describe Danger::MatchesInDiff do
     describe "#todo_matches?" do
       it "is false for no matches" do
@@ -74,5 +73,4 @@ module Danger
       end
     end
   end
-  # rubocop:enable Metrics/BlockLength
 end
