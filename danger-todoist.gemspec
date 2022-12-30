@@ -16,31 +16,23 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ["lib"]
-  spec.required_ruby_version = ">= 2.3.8"
+  spec.required_ruby_version = ">= 3"
 
-  spec.add_runtime_dependency "danger-plugin-api", "~> 1.0"
+  spec.add_runtime_dependency "danger-plugin-api", "~> 1"
 
   # General ruby development
-  spec.add_development_dependency "bundler", "~> 2.0"
-  spec.add_development_dependency "rake", "~> 10.0"
+  spec.add_development_dependency "bundler", "~> 2"
+  spec.add_development_dependency "rake", "~> 13"
 
   # Testing support
-  spec.add_development_dependency "codeclimate-test-reporter", "~> 1.0"
-  spec.add_development_dependency "rspec", "~> 3.4"
-  spec.add_development_dependency "simplecov", "~> 0.12"
+  spec.add_development_dependency "rspec", "~> 3.12"
+  spec.add_development_dependency "simplecov", "~> 0.22"
 
   # Linting code and docs
   spec.add_development_dependency "rubocop", "1.41.1"
   spec.add_development_dependency "rubocop-rake", "0.6.0"
   spec.add_development_dependency "rubocop-rspec", "2.16.0"
-  spec.add_development_dependency "yard", "~> 0.9.12"
-
-  # Makes testing easy via `bundle exec guard`
-  spec.add_development_dependency "guard", "~> 2.14"
-  spec.add_development_dependency "guard-rspec", "~> 4.7"
-
-  # If you want to work on older builds of ruby
-  spec.add_development_dependency "listen", "3.0.7"
+  spec.add_development_dependency "yard", "~> 0.9.28"
 
   # This gives you the chance to run a REPL inside your tests
   # via:
