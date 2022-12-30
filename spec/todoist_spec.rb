@@ -15,7 +15,7 @@ module Danger
         @todoist = @dangerfile.todoist
       end
 
-      context "changed files containing newly introduced todos" do
+      context "with changed files containing newly introduced todos" do
         before do
           patch = <<PATCH
 + # TODO: some todo
@@ -95,7 +95,7 @@ PATCH
         end
       end
 
-      context "changed files not containing a todo" do
+      context "with changed files not containing a todo" do
         before do
           modified = Git::Diff::DiffFile.new(
             "base",
