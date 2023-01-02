@@ -4,6 +4,7 @@ require:
 
 AllCops:
   NewCops: enable
+  TargetRubyVersion: 3.0.0
 
 Style/StringLiterals:
   EnforcedStyle: double_quotes
