@@ -1,6 +1,6 @@
 ## master
 
-* Drop ruby 2.3.x support - hanneskaeufler
+* Drop ruby 2.x support - hanneskaeufler
 
 ## 2.0.1
 
